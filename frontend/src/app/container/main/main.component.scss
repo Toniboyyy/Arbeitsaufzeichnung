@@ -1,0 +1,36 @@
+.outerbox {
+    margin-top: 10%;
+    background-color: white;
+    border-style: groove;
+    border-width: thin;
+}
+
+table {
+    table-layout: fixed; width: 80%;
+    text-align: center;
+
+     }
+.tr {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+td {
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    border-bottom: 1px solid #ddd;
+}
+
+img {
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.wrapper {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
