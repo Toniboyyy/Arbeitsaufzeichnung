@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {MainService} from '../../service/main.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Day} from '../../dtos/day';
+import {DayFilter} from '../../dtos/dayFilter';
 
 @Component({
   selector: 'app-main',
@@ -15,6 +16,8 @@ export class MainComponent implements OnInit {
   errorMessage: string = '';
   submitted: boolean = false;
   dayForm: FormGroup;
+  private days: Day[];
+
 
   constructor(private router: Router, private mainService: MainService, private formBuilder: FormBuilder) {
        this.dayForm = this.formBuilder.group({
@@ -25,6 +28,19 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadCurrentDays();
+  }
+
+  loadCurrentDays(){
+    var today: DayFilter = new DayFilter(new Date(2018, 8))
+    this.mainService.getDay(today).subscribe(
+      (day: Day[]) => {
+        this.days = day;
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
   }
 
   goToProject(){
@@ -49,7 +65,7 @@ export class MainComponent implements OnInit {
   createDay(day: Day) {
     this.mainService.addDay(day).subscribe(
       () => {
-                   // loadDays implementieren
+          this.loadCurrentDays();
       },
       error => {
         this.defaultServiceErrorHandling(error);

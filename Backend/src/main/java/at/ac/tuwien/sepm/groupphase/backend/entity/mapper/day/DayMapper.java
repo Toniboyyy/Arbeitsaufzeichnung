@@ -1,7 +1,9 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity.mapper.day;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.day.DayDTO;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.day.DayFilterDTO;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Day;
+import at.ac.tuwien.sepm.groupphase.backend.entity.DayFilter;
 import org.mapstruct.Mapper;
 
 import java.util.List;
@@ -14,5 +16,7 @@ public interface DayMapper {
 
     DayDTO DayToDayDto (Day day);
 
-    Set<DayDTO> DaySetToDayDto (List<Day> dayList);
+    Set<DayDTO> DayListToDayDtoSet (List<Day> dayList);
+
+    DayFilter DayFilterDtoToDayFilter(DayFilterDTO dayFilterDTO);
 }
