@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.security.Timestamp;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @ApiModel(value = "SimpleDayDTO", description = "DTO to save a day")
 public class DayDTO {
@@ -14,9 +15,9 @@ public class DayDTO {
 
     private LocalDateTime date;
 
-    private Timestamp start;
+    private LocalTime start;
 
-    private Timestamp finish;
+    private LocalTime finish;
 
     public Long getId() {
         return id;
@@ -34,19 +35,19 @@ public class DayDTO {
         this.date = date;
     }
 
-    public Timestamp getStart() {
+    public LocalTime getStart() {
         return start;
     }
 
-    public void setStart(Timestamp start) {
+    public void setStart(LocalTime start) {
         this.start = start;
     }
 
-    public Timestamp getFinish() {
+    public LocalTime getFinish() {
         return finish;
     }
 
-    public void setFinish(Timestamp finish) {
+    public void setFinish(LocalTime finish) {
         this.finish = finish;
     }
 }
