@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Globals} from '../global/globals';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Day} from '../dtos/day';
 import {DayFilter} from '../dtos/dayFilter';
 import {Observable} from 'rxjs';
@@ -21,7 +21,7 @@ export class MainService {
     return this.httpClient.post(this.dayBaseUri, day);
   }
 
-  getDay(dayfilter: DayFilter): Observable<Day[]>{
+  getDay(dayfilter: DayFilter): Observable<Day[]> {
     console.log('Get day');
     return this.httpClient.post<Day[]>(this.dayBaseUri + '/getAll', dayfilter);
   }

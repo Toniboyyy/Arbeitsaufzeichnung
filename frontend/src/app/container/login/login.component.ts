@@ -11,14 +11,14 @@ import {AuthRequest} from '../../dtos/auth-request';
 })
 export class LoginComponent implements OnInit {
 
-loginForm: FormGroup;
-// After first submission attempt, form validation will start
-submitted: boolean = false;
-// Error flag
-error: boolean = false;
-errorMessage: string = '';
+  loginForm: FormGroup;
+  // After first submission attempt, form validation will start
+  submitted: boolean = false;
+  // Error flag
+  error: boolean = false;
+  errorMessage: string = '';
 
-constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]]

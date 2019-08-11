@@ -8,14 +8,14 @@ import * as jwt_decode from 'jwt-decode';
 import {Globals} from '../global/globals';
 
 @Injectable({
-providedIn: 'root'
+  providedIn: 'root'
 })
 export class AuthService {
 
-private authBaseUri: string = this.globals.backendUri + '/authentication';
-private authScheduler: Observable<any> = interval(1000);
+  private authBaseUri: string = this.globals.backendUri + '/authentication';
+  private authScheduler: Observable<any> = interval(1000);
 
-constructor(private httpClient: HttpClient, private globals: Globals) {
+  constructor(private httpClient: HttpClient, private globals: Globals) {
     this.scheduleReAuthentication();
   }
 

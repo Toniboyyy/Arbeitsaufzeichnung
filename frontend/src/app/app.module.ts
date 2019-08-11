@@ -10,6 +10,7 @@ import { FooterComponent } from './container/footer/footer.component';
 import { HeaderComponent } from './container/header/header.component';
 import { ProjectComponent } from './container/project/project.component';
 import {Globals} from './global/globals';
+import {httpInterceptorProviders} from './interceptors';
 import { LoginComponent } from './container/login/login.component';
 
 @NgModule({
@@ -28,7 +29,7 @@ import { LoginComponent } from './container/login/login.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [Globals],
+  providers: [httpInterceptorProviders, Globals],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
