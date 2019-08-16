@@ -5,6 +5,7 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.project.ProjectDTO;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.security.Timestamp;
+import java.time.LocalTime;
 
 public class ProjectTimeDTO {
 
@@ -13,11 +14,13 @@ public class ProjectTimeDTO {
 
     private DayDTO day;
 
-    private ProjectDTO projectEntity;
+    private ProjectDTO project;
 
-    private Timestamp start;
+    private LocalTime start;
 
-    private Timestamp finish;
+    private LocalTime finish;
+
+    private Float working_hours;
 
     public Long getId() {
         return id;
@@ -36,26 +39,34 @@ public class ProjectTimeDTO {
     }
 
     public ProjectDTO getProjectEntity() {
-        return projectEntity;
+        return project;
     }
 
     public void setProjectEntity(ProjectDTO projectEntity) {
-        this.projectEntity = projectEntity;
+        this.project = projectEntity;
     }
 
-    public Timestamp getStart() {
+    public LocalTime getStart() {
         return start;
     }
 
-    public void setStart(Timestamp start) {
+    public void setStart(LocalTime start) {
         this.start = start;
     }
 
-    public Timestamp getFinish() {
+    public LocalTime getFinish() {
         return finish;
     }
 
-    public void setFinish(Timestamp finish) {
+    public void setFinish(LocalTime finish) {
         this.finish = finish;
+    }
+
+    public Float getWorking_hours() {
+        return working_hours;
+    }
+
+    public void setWorking_hours(Float working_hours) {
+        this.working_hours = working_hours;
     }
 }

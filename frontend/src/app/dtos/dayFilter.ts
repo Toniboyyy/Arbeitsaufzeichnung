@@ -1,6 +1,6 @@
 export class DayFilter {
     constructor(
-    public dates: Date
+    public dates: String
     ) {
   }
 }

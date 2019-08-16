@@ -2,7 +2,7 @@
   <h1 style="text-align: center;">Projekt Zeiten</h1>
 
 
-  <table align="center">
+  <table align="center" class="tableProjektTime">
     <tr>
       <th>Projektnummer</th>
       <th>Projektname</th>
@@ -10,25 +10,103 @@
       <th>Zeit</th>
       <th></th>
     </tr>
-    <tr>    <!--ngFor when connected to server -->
-      <td>0001</td>
-      <td>12:00-13:00</td>
-      <td>1.00</td>
-      <td> </td>
+    <tr *ngFor="let projectTime of projectTimes">    <!--ngFor when connected to server -->
+      <td>{{projectTime.projectEntity.projectId}}</td>
+      <td>{{projectTime.projectEntity.name}}</td>
+      <td>{{projectTime.start}} - {{projectTime.finish}}</td>
+      <td>{{projectTime.working_hours}}</td>
       <td>
-        <img src="assets/iconmonstr-pencil-8.svg" aria-describedby="Bearbeiten">
-        <img src="assets/iconmonstr-x-mark-1.svg" name="Löschen"></td>
+        <img src="assets/iconmonstr-pencil-8.svg" title="Bearbeiten">
+        <img src="assets/iconmonstr-x-mark-1.svg" title="Löschen"></td>
     </tr>
     <tr>
       <td></td>
       <td></td>
-      <td>1.00</td>
-      <td> </td>
+      <td></td>
+      <td>{{totalTime}}</td>
       <td></td>
     </tr>
   </table>
   <div class="wrapper">
-    <button class="button">Neue Hinzufügen</button>
+    <button class="btn btn-secondary btn-sm mr-4"data-toggle="modal" data-target=".create-project-modal">Neue Hinzufügen</button>
   </div>
+</div>
 
+<div class="modal fade create-project-modal" tabindex="-1" role="dialog" aria-labelledby="Create project modal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Neue Projektzeit</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="clearForm()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form" [formGroup]="projectForm" (ngSubmit)="addProjectTime()">
+        <div class="box left">
+          <div class="form-group">
+            <label for="inputStart">Anfangszeit</label>
+            <input type="time" name="start" formControlName="start" class="form-control" id="inputStart"
+                      aria-describedby="startHelp" placeholder="Zeit der Ankunft">
+            <div *ngIf="submitted && projectForm.controls.start.errors.required" class="error">
+              <small class="form-text text-warning">Eine Ankunftszeit wird benötigt!
+              </small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputFinish">Endzeit</label>
+            <input type="time" name="finish" formControlName="finish" class="form-control" id="inputFinish"
+                      aria-describedby="finishHelp" placeholder="Zeit der Abreise">
+            <div *ngIf="submitted && projectForm.controls.finish.errors.required" class="error">
+              <small class="form-text text-warning">Eine Endzeit wird benötigt!
+              </small>
+            </div>
+          </div>
+        </div>
+
+          <div class="box right">
+            <ul style="list-style: none;">
+              <li>Datum:
+              </li>
+              <li>Zeit:
+              </li>
+              <li>Projekt: <a *ngIf="!selectedProjectSet()">{{selectedProject.name}}</a>
+              </li>
+              <li>Tageszeit:
+              </li>
+            </ul>
+          </div>
+          <br>
+          
+            <div class="active-cyan-4 mb-4">
+              <div class="input-group">
+                <input type="text" name="projekt" formControlName="projekt" class="form-control" id="inputProject"
+                        aria-describedby="projektHelp" placeholder="ProjektNr.">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn">Suchen</button>
+                      </span>  
+              </div>   
+
+          </div>
+           <table class="tableProjekt" align="center">
+              <tr>
+                <th>Nr</th>
+                <th>Projektname</th>
+                <th></th>
+              </tr>
+              <tr *ngFor="let projects of project">
+                <td>{{projects.projectId}}</td>
+                <td title="{{projects.desc}}">{{projects.name}}</td>
+                <td>
+                    <input type="radio" title="Auswählen" name="selectedProject"
+                  aria-describedby="projectHelp" (change)="selectProject(projects)" >
+                </td>
+              </tr>
+            </table>
+            <div class="center"><button type="button" (click)="addProjectTime()" class="btn btn-success projecttime" >Projektzeit hinzufügen</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

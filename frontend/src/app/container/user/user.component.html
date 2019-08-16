@@ -1,0 +1,32 @@
+<div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Error! </strong> {{ errorMessage }}
+    <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="outerbox">
+    <h1 style="text-align: center;">User hinzufügen</h1>
+    <form class="form" [formGroup]="userForm" (ngSubmit)="filterMonths()" style="text-align: center;">
+        <ul style="list-style-type:none">
+            <li>
+                <input type="string" name="firstname" formControlName="firstname" class="form" id="inputFilter" placeholder="Vorname">
+            </li>
+            <li>
+                <input type="string" name="lastname" formControlName="lastname" class="form" id="inputFilter" placeholder="Nachname">
+            </li>
+            <li>
+                <input type="string" name="username" formControlName="username" class="form" id="inputFilter" placeholder="Username">
+            </li>
+            <li>
+                <input type="string" name="password" formControlName="password" class="form" id="inputFilter" placeholder="Passwort">
+            </li>
+            <li>
+                <input type="string" name="second_pw" formControlName="second_pw" class="form" id="inputFilter" placeholder="Passwort">
+            </li>
+        </ul>
+    </form>
+</div>
+  
+  
+  
+  

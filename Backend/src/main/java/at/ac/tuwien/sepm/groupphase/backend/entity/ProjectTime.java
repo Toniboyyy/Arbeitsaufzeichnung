@@ -20,6 +20,10 @@ public class ProjectTime {
     @OneToOne(cascade = CascadeType.ALL)
     private Project project;
 
+    @ManyToOne
+    @JoinColumn
+    private Day day;
+
     public Long getId() {
         return id;
     }
@@ -50,5 +54,13 @@ public class ProjectTime {
 
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    public Day getDay() {
+        return day;
+    }
+
+    public void setDay(Day day) {
+        this.day = day;
     }
 }

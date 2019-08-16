@@ -12,6 +12,7 @@ import { ProjectComponent } from './container/project/project.component';
 import {Globals} from './global/globals';
 import {httpInterceptorProviders} from './interceptors';
 import { LoginComponent } from './container/login/login.component';
+import { UserComponent } from './container/user/user.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { LoginComponent } from './container/login/login.component';
     FooterComponent,
     HeaderComponent,
     ProjectComponent,
-    LoginComponent
+    LoginComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,7 @@ import { LoginComponent } from './container/login/login.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [httpInterceptorProviders, Globals],
+  providers: [Globals, httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

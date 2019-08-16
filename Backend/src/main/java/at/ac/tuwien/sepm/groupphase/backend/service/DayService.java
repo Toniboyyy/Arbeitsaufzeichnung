@@ -8,11 +8,13 @@ import java.util.Set;
 
 public interface DayService {
 
-    Day add(Day day);
+    Day add(Day day, String username);
 
-    Day change(Day day);
+    Day change(Day day, String username);
 
-    void delete(Long id);
+    void delete(Long id, String username);
 
-    List<Day> getByMonthAndYear(DayFilter dayFilter);
+    List<Day> getByMonthAndYear(DayFilter dayFilter, String username);
+
+    Day getById(Long id, String username);
 }

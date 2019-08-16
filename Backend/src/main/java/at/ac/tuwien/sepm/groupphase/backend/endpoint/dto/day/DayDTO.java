@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.security.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -13,11 +14,13 @@ public class DayDTO {
     @ApiModelProperty(readOnly = true, name = "The automatically generated database id")
     private Long id;
 
-    private LocalDateTime date;
+    private LocalDate dates;
 
     private LocalTime start;
 
     private LocalTime finish;
+
+    private Float working_hours;
 
     public Long getId() {
         return id;
@@ -27,12 +30,12 @@ public class DayDTO {
         this.id = id;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDate getDates() {
+        return dates;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setDates(LocalDate dates) {
+        this.dates = dates;
     }
 
     public LocalTime getStart() {
@@ -49,5 +52,13 @@ public class DayDTO {
 
     public void setFinish(LocalTime finish) {
         this.finish = finish;
+    }
+
+    public Float getWorking_hours() {
+        return working_hours;
+    }
+
+    public void setWorking_hours(Float working_hours) {
+        this.working_hours = working_hours;
     }
 }

@@ -2,6 +2,8 @@ package at.ac.tuwien.sepm.groupphase.backend.configuration;
 
 import at.ac.tuwien.sepm.groupphase.backend.configuration.properties.H2ConsoleConfigurationProperties;
 import at.ac.tuwien.sepm.groupphase.backend.security.HeaderTokenAuthenticationFilter;
+import at.ac.tuwien.sepm.groupphase.backend.service.LoginUserService;
+import at.ac.tuwien.sepm.groupphase.backend.service.implementation.SimpleLoginUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
@@ -12,6 +14,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.provisioning.InMemoryUserDetailsManagerConfigurer;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -19,6 +22,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -62,7 +66,7 @@ public class SecurityConfiguration {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth, List<AuthenticationProvider> providerList) throws Exception {
         new InMemoryUserDetailsManagerConfigurer<AuthenticationManagerBuilder>()
-            .withUser("user").password(passwordEncoder.encode("password")).authorities("USER").and()
+            //.withUser("user").password(passwordEncoder.encode("password")).authorities("USER").and()
             .withUser("admin").password(passwordEncoder.encode("password")).authorities("ADMIN", "USER").and()
             .passwordEncoder(passwordEncoder)
             .configure(auth);
@@ -76,15 +80,30 @@ public class SecurityConfiguration {
         private final String h2ConsolePath;
         private final String h2AccessMatcher;
 
+        private final LoginUserService loginUserService;
+
         @Autowired
         private AuthenticationManager authenticationManager;
 
-        public WebSecurityConfiguration(
-            H2ConsoleConfigurationProperties h2ConsoleConfigurationProperties
-        ) {
+        public WebSecurityConfiguration(H2ConsoleConfigurationProperties h2ConsoleConfigurationProperties, LoginUserService loginUserService) {
             h2ConsolePath = h2ConsoleConfigurationProperties.getPath();
             h2AccessMatcher = h2ConsoleConfigurationProperties.getAccessMatcher();
+            this.loginUserService = loginUserService;
         }
+
+        @Bean
+        public DaoAuthenticationProvider authenticationProvider() {
+            DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+            authenticationProvider.setUserDetailsService(userDetailsService());
+            authenticationProvider.setPasswordEncoder(SecurityConfiguration.configureDefaultPasswordEncoder());
+            return authenticationProvider;
+        }
+
+        @Bean
+        public UserDetailsService userDetailsService(){
+            return loginUserService;
+        }
+
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
@@ -131,7 +150,7 @@ public class SecurityConfiguration {
                 registry
                     .addMapping("/**")
                     .allowedOrigins("*")
-                    .allowedMethods("PUT","POST","OPTION","GET");
+                    .allowedMethods("PUT","POST","OPTION","GET","DELETE");
             }
         };
     }

@@ -5,13 +5,13 @@ import java.util.Date;
 
 public class DayFilterDTO {
 
-    private Date dates;
+    private LocalDate dates;
 
-    public Date getDates() {
+    public LocalDate getDates() {
         return dates;
     }
 
-    public void setDates(Date dates) {
+    public void setDates(LocalDate dates) {
         this.dates = dates;
     }
 }

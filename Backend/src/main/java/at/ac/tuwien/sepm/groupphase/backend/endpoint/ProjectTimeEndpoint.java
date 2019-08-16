@@ -2,45 +2,65 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.projectTime.ProjectTimeDTO;
 import at.ac.tuwien.sepm.groupphase.backend.entity.ProjectTime;
+import at.ac.tuwien.sepm.groupphase.backend.entity.mapper.projectTime.ProjectTimeMapper;
+import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.service.ProjectTimeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.security.Principal;
 import java.util.Set;
 
 @RestController
-@RequestMapping(value = "/projects")
-@Api(value = "projects")
+@RequestMapping(value = "/projectTime")
+@Api(value = "projectTime")
 public class ProjectTimeEndpoint {
 
-    private ProjectTimeService projectTimeService;
+    private final ProjectTimeService projectTimeService;
+    private final ProjectTimeMapper projectTimeMapper;
 
-    public ProjectTimeEndpoint(ProjectTimeService projectTimeService) {
+    public ProjectTimeEndpoint(ProjectTimeService projectTimeService, ProjectTimeMapper projectTimeMapper) {
         this.projectTimeService = projectTimeService;
+        this.projectTimeMapper = projectTimeMapper;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "Get ProjectTimes by Day ID")
-    public Set<ProjectTimeDTO> getByFilter(@RequestParam Long dayid){
-        return null;
+    public Set<ProjectTimeDTO> getProjectTimeByDayId(@RequestParam Long dayid, Principal principal){
+        try {
+            return projectTimeMapper.TimeListToTimeDto(projectTimeService.getByDayId(dayid, principal.getName()));
+        }catch (NotFoundException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    @ApiOperation(value = "Add ProjectTime")
-    public ProjectTimeDTO add(@RequestBody ProjectTime projectTime, @RequestParam Long dayId){
-        return null;
+    @ApiOperation(value = "Add ProjectTime", authorizations = {@Authorization(value = "apiKey")})
+    public ProjectTimeDTO add(@RequestBody ProjectTimeDTO projectTimeDTO, @RequestParam Long dayId, Principal principal){
+        try{
+            return projectTimeMapper.TimeToTimeDto(projectTimeService.add(projectTimeMapper.TimeDtoToTime(projectTimeDTO), dayId, principal.getName()));
+        }catch (NotFoundException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @RequestMapping(method = RequestMethod.PUT)
     @ApiOperation(value = "Change ProjectTime")
-    public ProjectTimeDTO change(@RequestBody ProjectTime projectTime){
+    public ProjectTimeDTO change(@RequestBody ProjectTimeDTO projectTimeDTO, Principal principal){
         return null;
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete ProjectTime")
-    public void delete(Long id){
-        projectTimeService.delete(id);
+    public void delete(Long id, Principal principal){
+        projectTimeService.delete(id,principal.getName());
     }
 }

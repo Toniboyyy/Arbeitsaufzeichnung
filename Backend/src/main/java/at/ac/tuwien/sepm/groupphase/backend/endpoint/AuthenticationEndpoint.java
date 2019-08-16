@@ -5,6 +5,7 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.authentication.Authenti
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.authentication.AuthenticationTokenInfo;
 import at.ac.tuwien.sepm.groupphase.backend.security.AuthenticationConstants;
 import at.ac.tuwien.sepm.groupphase.backend.service.HeaderTokenAuthenticationService;
+import at.ac.tuwien.sepm.groupphase.backend.service.LoginUserService;
 import at.ac.tuwien.sepm.groupphase.backend.service.implementation.SimpleHeaderTokenAuthenticationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,9 +20,11 @@ import springfox.documentation.annotations.ApiIgnore;
 public class AuthenticationEndpoint {
 
     private final HeaderTokenAuthenticationService authenticationService;
+    private final LoginUserService loginUserService;
 
-    public AuthenticationEndpoint(SimpleHeaderTokenAuthenticationService simpleHeaderTokenAuthenticationService) {
+    public AuthenticationEndpoint(SimpleHeaderTokenAuthenticationService simpleHeaderTokenAuthenticationService, LoginUserService loginUserService) {
         authenticationService = simpleHeaderTokenAuthenticationService;
+        this.loginUserService = loginUserService;
     }
 
     @RequestMapping(method = RequestMethod.POST)

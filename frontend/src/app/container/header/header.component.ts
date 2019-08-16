@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../service/auth.service";
+import {AuthService} from '../../service/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +11,10 @@ export class HeaderComponent implements OnInit {
   constructor(public authService: AuthService) { }
 
   ngOnInit() {
+  }
+
+  isAdmin() {
+    return this.authService.getUserRole() == 'ADMIN';
   }
 
 }

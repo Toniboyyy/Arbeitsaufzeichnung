@@ -5,10 +5,9 @@
     border-width: thin;
 }
 
-
-
-table {
-    table-layout: fixed; width: 80%;
+.tableProjektTime {
+    table-layout: fixed; 
+    width: 80%;
     text-align: center;
 }
 
@@ -28,7 +27,45 @@ th {
 img {
     cursor: pointer;
     margin-left: 10px;
-    width: 10%;
-    height: 10%;
+}
+.left{
+    float: left;
+    width: 40%;
+    margin-bottom: 5%;
 }
 
+.right{
+    float: left;
+    width: 50%;
+    margin-left: 5%;
+}
+
+.tableProjekt {
+    table-layout: fixed; 
+    width: 70%;
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+.input{
+    width: 75%;
+}
+
+.center{
+    text-align: center;
+}
+
+#inputProject {
+    width: 80%;
+}
+
+.inputbutton {
+    height: 50%;
+    width: 50%;
+}
+
+li{
+    font-size: 125%;
+    font-weight: bolder;
+    margin-bottom: 5%;
+}

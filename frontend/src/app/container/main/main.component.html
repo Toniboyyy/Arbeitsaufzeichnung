@@ -10,6 +10,11 @@
 <div class="outerbox">
   <h1 style="text-align: center;">Arbeitsaufzeichnung</h1>
 
+  <form class="form" [formGroup]="filterForm" (ngSubmit)="filterMonths()">
+      <input type="month" name="day" formControlName="dates" class="form" id="inputFilter" placeholder="Datum">
+      <button type="button" (click)="filterMonths()" class="btn ">Suchen</button>
+  </form>
+
 
   <table align="center">
       <tr>
@@ -19,21 +24,22 @@
         <th>Projektzeit</th>
         <th></th>
       </tr>
-      <tr>    <!--ngFor when connected to server -->
-        <td>08.02.2019</td>
-        <td>12:00-13:00</td>
-        <td>1.00</td>
+      <tr *ngFor="let day of days">
+        <td>{{day.dates}}</td>
+        <td>{{day.start}} - {{day.finish}}</td>
+        <td>{{day.working_hours| number: '.0-2'}}</td>
         <td> </td>
         <td>
-        <img src="assets/iconmonstr-pencil-8.svg" aria-describedby="Bearbeiten">
-        <img src="assets/iconmonstr-plus-5.svg" name="Projekt hinzufügen" (click)="goToProject()">
-        <img src="assets/iconmonstr-x-mark-1.svg" name="Löschen" (click)="delete()">
+        <img src="assets/iconmonstr-pencil-8.svg" title="Bearbeiten">
+        <img src="assets/iconmonstr-plus-5.svg" title="Projekt hinzufügen" [routerLink]="['/project', day.id]">
+        <img src="assets/iconmonstr-x-mark-1.svg" title="Löschen" (click)="deleteDay(day)">
         </td>
       </tr>
     <tr>
       <td></td>
       <td></td>
-      <td>1.00</td>
+      <td>{{this.totalTime | number: '.0-2'}}</td>
+      <td> </td>
       <td> </td>
     </tr>
   </table>
@@ -85,7 +91,7 @@
               </small>
             </div>
           </div>
-          <button type="button" (click)="addDay()" class="btn btn-success float-right">Arbeitsaufzeichnung hinzufügen</button>
+          <button type="button" (click)="addDay()" class="btn btn-success">Arbeitsaufzeichnung hinzufügen</button>
         </form>
       </div>
     </div>
