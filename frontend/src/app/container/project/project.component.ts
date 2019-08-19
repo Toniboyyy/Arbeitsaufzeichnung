@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProjectTimeService } from 'src/app/service/project-time.service';
 import { Project } from 'src/app/dtos/project';
 import { isUndefined, isNullOrUndefined } from 'util';
+import { Day } from 'src/app/dtos/day';
 
 @Component({
   selector: 'app-project',
@@ -16,7 +17,8 @@ import { isUndefined, isNullOrUndefined } from 'util';
 })
 export class ProjectComponent implements OnInit {
 
-
+  dayId: number;
+  day: Day;
 
   projectTimes: ProjectTime[];
   project: Project[];
@@ -27,40 +29,50 @@ export class ProjectComponent implements OnInit {
   projectForm: FormGroup;
 
   totalTime: number
-  selectedProject: Project = undefined;
+  selectedProject: Project;
+
+  submitted: boolean = false;
 
   constructor(private route: ActivatedRoute, private projectService: ProjectService, private formBuilder: FormBuilder, private projectTimeService: ProjectTimeService, private dayService: MainService) { }
 
   ngOnInit() {
     this.projectForm = this.formBuilder.group({
       start: ['', [Validators.required]],
-      finish: ['', [Validators.required]],
-      projectId: ['', [Validators.required]]
+      finish: ['', [Validators.required]]
     });
 
-    this
+    this.loadDay();
     this.loadProjectTimes();
     this.loadProjects();
+    console.log(this.projectForm.controls.start.errors.required);
   }
 
   loadDay(){
     this.route.paramMap.pipe(switchMap(params => {
+      this.dayId = parseInt(params.get('id'),0);
       return this.dayService.getDayById(parseInt(params.get('id'),0));
-      })).subscribe( (project: ProjectTime[]) => {this.projectTimes = project; this.setTotalTime();}, error => this.defaultServiceErrorHandling(error));
+      })).subscribe(
+        (day: Day) => {
+          this.day = day; 
+        },
+        error => this.defaultServiceErrorHandling(error));
   }
 
   
   loadProjectTimes(){
-    this.route.paramMap.pipe(switchMap(params => {
-      return this.projectTimeService.getProject(parseInt(params.get('id'),0));
-      })).subscribe( (project: ProjectTime[]) => {this.projectTimes = project; this.setTotalTime();}, error => this.defaultServiceErrorHandling(error));
+      return this.projectTimeService.getProject(this.dayId).subscribe( 
+        (project: ProjectTime[]) => {
+          this.projectTimes = project;
+          this.setTotalTime();
+        }, 
+        error => 
+          this.defaultServiceErrorHandling(error));
   }
 
   loadProjects(){
     this.projectService.getProjects().subscribe(
       (project: Project[]) => {
         this.project = project;
-        
       },
       error => {
         this.defaultServiceErrorHandling(error);
@@ -95,16 +107,17 @@ export class ProjectComponent implements OnInit {
   }
 
   addProjectTime() {
+    this.submitted = true;
     if (this.projectForm.valid) {
       const project: ProjectTime = new ProjectTime(null,
         this.projectForm.controls.start.value,
         this.projectForm.controls.finish.value, 
-        null,null,null
+        null,new Project(this.selectedProject.id, null, null, null), new Day(this.dayId,null,null,null,null)
       );
 
-    this.projectTimeService.addProject(project, 3153).subscribe(      
+    this.projectTimeService.addProject(project, this.dayId).subscribe(      
       () => {
-      this.loadCurrentDays();
+      this.loadProjectTimes();
     },
     error => {
       this.defaultServiceErrorHandling(error);
@@ -118,6 +131,11 @@ export class ProjectComponent implements OnInit {
   }
 
   selectedProjectSet(): boolean {
-    return !(this.selectProject === undefined);
+    return (this.selectedProject === undefined);
+  }
+
+  private clearForm() {
+    this.projectForm.reset();
+    this.submitted = false;
   }
 }

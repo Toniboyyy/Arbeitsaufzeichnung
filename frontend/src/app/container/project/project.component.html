@@ -1,7 +1,37 @@
+<div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Error! </strong> {{ errorMessage }}
+    <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  
+  
+
 <div class="outerbox">
   <h1 style="text-align: center;">Projekt Zeiten</h1>
+  <h4 style="text-align: center;"> Datum: {{day.dates}} </h4>
+
+  <table align="center" class="data-display">
+      <tr class="">
+        <th>Soll-Zeit: </th>
+        <th>Ist-Zeit: {{totalTime}}</th>
+      </tr>
+      <tr>
+        <th>Saldo: </th>
+        <th>Differenz Soll/Projekt-Zeit: </th>
+      </tr>
+  </table>
 
 
+  <div class="active-cyan-4 mb-4" align="center">
+    <div class="input-group">
+      <input type="number" name="projekt"  class="form-control" id="inputProject"
+              aria-describedby="projektHelp" placeholder="ProjektNr.">
+              <span class="input-group-btn">
+                  <button type="button" class="btn">Suchen</button>
+            </span>  
+    </div>   
+  </div>
   <table align="center" class="tableProjektTime">
     <tr>
       <th>Projektnummer</th>
@@ -10,7 +40,7 @@
       <th>Zeit</th>
       <th></th>
     </tr>
-    <tr *ngFor="let projectTime of projectTimes">    <!--ngFor when connected to server -->
+    <tr *ngFor="let projectTime of projectTimes">    
       <td>{{projectTime.projectEntity.projectId}}</td>
       <td>{{projectTime.projectEntity.name}}</td>
       <td>{{projectTime.start}} - {{projectTime.finish}}</td>
@@ -67,7 +97,7 @@
 
           <div class="box right">
             <ul style="list-style: none;">
-              <li>Datum:
+              <li>Datum: <a>{{day.dates}}</a>
               </li>
               <li>Zeit:
               </li>
@@ -81,14 +111,17 @@
           
             <div class="active-cyan-4 mb-4">
               <div class="input-group">
-                <input type="text" name="projekt" formControlName="projekt" class="form-control" id="inputProject"
+                <input type="number" name="projekt" formControlName="projekt" class="form-control" id="inputProjectPopUp"
                         aria-describedby="projektHelp" placeholder="ProjektNr.">
                         <span class="input-group-btn">
                             <button type="button" class="btn">Suchen</button>
                       </span>  
-              </div>   
-
+              </div>
           </div>
+          <div *ngIf="submitted && selectedProjectSet()" class="error">
+              <small class="form-text text-warning">Eine Projekt muss ausgewählt werden!
+              </small>
+            </div>
            <table class="tableProjekt" align="center">
               <tr>
                 <th>Nr</th>
@@ -100,7 +133,7 @@
                 <td title="{{projects.desc}}">{{projects.name}}</td>
                 <td>
                     <input type="radio" title="Auswählen" name="selectedProject"
-                  aria-describedby="projectHelp" (change)="selectProject(projects)" >
+                  aria-describedby="projectHelp" (change)="selectProject(projects)">
                 </td>
               </tr>
             </table>

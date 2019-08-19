@@ -15,7 +15,7 @@ export class ProjectTimeService {
 
   addProject(project: ProjectTime, id: number): Observable<ProjectTime>{
     console.log('Add projectTime');
-    return this.httpClient.post<ProjectTime>(this.projectBaseUri+'?dayId='+id, project);
+    return this.httpClient.post<ProjectTime>(this.projectBaseUri, project);
   }
 
   changeProject(project: ProjectTime): Observable<ProjectTime>{
@@ -30,6 +30,6 @@ export class ProjectTimeService {
 
   getProject(id: number){
     console.log('Get projectTime by Day');
-    return this.httpClient.get(this.projectBaseUri+'?dayid='+id);
+    return this.httpClient.get(this.projectBaseUri+'?dayId='+id);
   }
 }

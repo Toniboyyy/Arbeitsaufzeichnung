@@ -12,7 +12,12 @@ import java.util.Set;
 public class SimpleProjectMapper implements ProjectMapper {
     @Override
     public Project ProjectDtoToProject(ProjectDTO projectDTO) {
-        return null;
+        Project project = new Project();
+        project.setId(projectDTO.getId());
+        project.setProject_id(projectDTO.getProjectId());
+        project.setProject_desc(projectDTO.getDesc());
+        project.setProject_name(projectDTO.getName());
+        return project;
     }
 
     @Override

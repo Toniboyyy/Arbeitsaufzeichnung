@@ -31,4 +31,9 @@ export class MainService {
     return this.httpClient.delete(this.dayBaseUri+'?id='+id);
   }
 
+  getDayById(id: number): Observable<Day>{
+    console.log('Get day by Id');
+    return this.httpClient.get<Day>(this.dayBaseUri + '?dayId='+id);
+  }
+
 }

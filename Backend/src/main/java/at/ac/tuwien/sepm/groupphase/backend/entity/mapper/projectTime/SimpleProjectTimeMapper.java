@@ -26,10 +26,10 @@ public class SimpleProjectTimeMapper implements ProjectTimeMapper {
     public ProjectTime TimeDtoToTime(ProjectTimeDTO projectTimeDTO) {
         ProjectTime projectTime = new ProjectTime();
         projectTime.setId(projectTimeDTO.getId());
-        projectTime.setDay(null);
+        projectTime.setDay(dayMapper.DayDtoToDay(projectTimeDTO.getDay()));
         projectTime.setStart_time(projectTimeDTO.getStart());
         projectTime.setFinish_time(projectTimeDTO.getFinish());
-        projectTime.setProject(null);       //TODO Projekt generieren
+        projectTime.setProject(projectMapper.ProjectDtoToProject(projectTimeDTO.getProjectEntity()));
         return projectTime;
     }
 
@@ -37,10 +37,10 @@ public class SimpleProjectTimeMapper implements ProjectTimeMapper {
     public ProjectTimeDTO TimeToTimeDto(ProjectTime projectTime) {
         ProjectTimeDTO projectTimeDTO = new ProjectTimeDTO();
         projectTimeDTO.setId(projectTime.getId());
-        projectTimeDTO.setDay(dayMapper.DayToDayDto(projectTime.getDay()));        //TODO Day zu Id ausbessern in DTO
+        projectTimeDTO.setDay(dayMapper.DayToDayDto(projectTime.getDay()));
         projectTimeDTO.setFinish(projectTime.getFinish_time());
         projectTimeDTO.setStart(projectTime.getStart_time());
-        projectTimeDTO.setProjectEntity(projectMapper.ProjectToProjectDto(projectTime.getProject()));  //TODO Project zu Id ausbessern in DTO
+        projectTimeDTO.setProjectEntity(projectMapper.ProjectToProjectDto(projectTime.getProject()));
         float hours = (float) projectTime.getFinish_time().getHour() - projectTime.getStart_time().getHour();
         hours += (float) (projectTime.getFinish_time().getMinute() - projectTime.getStart_time().getMinute())/60;
         projectTimeDTO.setWorking_hours(hours);

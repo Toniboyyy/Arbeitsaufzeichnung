@@ -55,7 +55,7 @@ img {
     text-align: center;
 }
 
-#inputProject {
+.input-group {
     width: 80%;
 }
 
@@ -68,4 +68,15 @@ li{
     font-size: 125%;
     font-weight: bolder;
     margin-bottom: 5%;
+}
+
+h4{
+    color: gray;
+    font-size: 110%;
+}
+
+.data-display{
+    margin-bottom: 2%;
+    table-layout: fixed; 
+    width: 80%;
 }

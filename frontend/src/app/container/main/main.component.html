@@ -30,7 +30,7 @@
         <td>{{day.working_hours| number: '.0-2'}}</td>
         <td> </td>
         <td>
-        <img src="assets/iconmonstr-pencil-8.svg" title="Bearbeiten">
+        <img src="assets/iconmonstr-pencil-8.svg" title="Bearbeiten" data-toggle="modal" data-target=".edit-day-modal">
         <img src="assets/iconmonstr-plus-5.svg" title="Projekt hinzufügen" [routerLink]="['/project', day.id]">
         <img src="assets/iconmonstr-x-mark-1.svg" title="Löschen" (click)="deleteDay(day)">
         </td>
@@ -97,5 +97,46 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade edit-day-modal" tabindex="-1" role="dialog" aria-labelledby="Edit day modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Arbeitsaufzeichnung bearbeiten</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="clearForm()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form" [formGroup]="dayForm" (ngSubmit)="editDay()">
+
+            <div class="form-group">
+              <label for="inputStart">Ankunft</label>
+              <input type="time" name="start" formControlName="start" class="form-control" id="inputStart"
+                        aria-describedby="startHelp" placeholder="Zeit der Ankunft">
+              <div *ngIf="submitted && dayForm.controls.start.errors.required" class="error">
+                <small class="form-text text-warning">Eine Ankunftszeit wird benötigt!
+                </small>
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <label for="inputFinish">Abreise</label>
+              <input type="time" name="finish" formControlName="finish" class="form-control" id="inputFinish"
+                        aria-describedby="finishHelp" placeholder="Zeit der Abreise">
+              <div *ngIf="submitted && dayForm.controls.finish.errors.required" class="error">
+                <small class="form-text text-warning">Eine Abreisezeit wird benötigt!
+                </small>
+              </div>
+            </div>
+            <button type="button" (click)="editDay()" class="btn btn-success">Arbeitsaufzeichnung ändern</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
 
 

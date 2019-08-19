@@ -30,9 +30,9 @@ public class ProjectTimeEndpoint {
 
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "Get ProjectTimes by Day ID")
-    public Set<ProjectTimeDTO> getProjectTimeByDayId(@RequestParam Long dayid, Principal principal){
+    public Set<ProjectTimeDTO> getProjectTimeByDayId(@RequestParam Long dayId, Principal principal){
         try {
-            return projectTimeMapper.TimeListToTimeDto(projectTimeService.getByDayId(dayid, principal.getName()));
+            return projectTimeMapper.TimeListToTimeDto(projectTimeService.getByDayId(dayId, principal.getName()));
         }catch (NotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }catch (Exception e){
@@ -42,9 +42,9 @@ public class ProjectTimeEndpoint {
 
     @RequestMapping(method = RequestMethod.POST)
     @ApiOperation(value = "Add ProjectTime", authorizations = {@Authorization(value = "apiKey")})
-    public ProjectTimeDTO add(@RequestBody ProjectTimeDTO projectTimeDTO, @RequestParam Long dayId, Principal principal){
+    public ProjectTimeDTO add(@RequestBody ProjectTimeDTO projectTimeDTO, Principal principal){
         try{
-            return projectTimeMapper.TimeToTimeDto(projectTimeService.add(projectTimeMapper.TimeDtoToTime(projectTimeDTO), dayId, principal.getName()));
+            return projectTimeMapper.TimeToTimeDto(projectTimeService.add(projectTimeMapper.TimeDtoToTime(projectTimeDTO), principal.getName()));
         }catch (NotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }catch (Exception e){

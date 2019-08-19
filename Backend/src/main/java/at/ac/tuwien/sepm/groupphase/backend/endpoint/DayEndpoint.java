@@ -81,9 +81,9 @@ public class DayEndpoint {
 
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "Get Day", authorizations = {@Authorization(value = "apiKey")})
-    public DayDTO getById(@RequestParam Long id, Principal principal) {
+    public DayDTO getById(@RequestParam Long dayId, Principal principal) {
         try {
-            return dayMapper.DayToDayDto(dayService.getById(id, principal.getName()));
+            return dayMapper.DayToDayDto(dayService.getById(dayId, principal.getName()));
         } catch (ValidationException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ProjectTimeService {
 
-    ProjectTime add(ProjectTime projectTime,Long dayId, String username);
+    ProjectTime add(ProjectTime projectTime, String username);
 
     ProjectTime change(ProjectTime projectTime, String username);
 
