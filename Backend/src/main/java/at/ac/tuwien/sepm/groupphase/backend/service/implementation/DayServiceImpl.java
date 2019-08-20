@@ -44,8 +44,13 @@ public class DayServiceImpl implements DayService {
     public Day change(Day day, String username){
         dayValidator.validate(day);
         if (day.getId() == null || day.getId() < 0){
-
+            throw new ValidationException("Id can't be negativ.");
         }
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        if(userOptional.isEmpty()){
+            throw new ValidationException("User can't be found");
+        }
+        day.setUser(userOptional.get());
         return dayRepository.save(day);
     }
 

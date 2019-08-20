@@ -1,5 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.implementation;
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.Enum.AuthorityType;
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
@@ -26,8 +27,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User create(User user) {
         user.setId(null);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userValidator.validate(user);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setAuthorityType(AuthorityType.ROLE_USER);
         return userRepository.save(user);
     }
 

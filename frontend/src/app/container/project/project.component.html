@@ -22,16 +22,17 @@
       </tr>
   </table>
 
-
-  <div class="active-cyan-4 mb-4" align="center">
-    <div class="input-group">
-      <input type="number" name="projekt"  class="form-control" id="inputProject"
-              aria-describedby="projektHelp" placeholder="ProjektNr.">
-              <span class="input-group-btn">
-                  <button type="button" class="btn">Suchen</button>
-            </span>  
-    </div>   
-  </div>
+  <form class="form" [formGroup]="projectNrForm" (ngSubmit)="getProjectsByProjektnr()">
+    <div class="active-cyan-4 mb-4" align="center">
+      <div class="input-group">
+        <input type="number" name="projekt"  class="form-control" id="inputProject"
+                aria-describedby="projektHelp" placeholder="ProjektNr.">
+                <span class="input-group-btn">
+                    <button type="button" class="btn" (click)="getProjectsByProjektnr()">Suchen</button>
+              </span>  
+      </div>   
+    </div>
+  </form>
   <table align="center" class="tableProjektTime">
     <tr>
       <th>Projektnummer</th>
@@ -47,7 +48,7 @@
       <td>{{projectTime.working_hours}}</td>
       <td>
         <img src="assets/iconmonstr-pencil-8.svg" title="Bearbeiten">
-        <img src="assets/iconmonstr-x-mark-1.svg" title="Löschen"></td>
+        <img src="assets/iconmonstr-x-mark-1.svg" title="Löschen" (click)="deleteProjectTime(projectTime.id)"></td>
     </tr>
     <tr>
       <td></td>
@@ -108,16 +109,17 @@
             </ul>
           </div>
           <br>
-          
-            <div class="active-cyan-4 mb-4">
-              <div class="input-group">
-                <input type="number" name="projekt" formControlName="projekt" class="form-control" id="inputProjectPopUp"
-                        aria-describedby="projektHelp" placeholder="ProjektNr.">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn">Suchen</button>
-                      </span>  
-              </div>
-          </div>
+          <form class="form" [formGroup]="projectNrForm" (ngSubmit)="getProjectsByProjektnr()">
+              <div class="active-cyan-4 mb-4">
+                <div class="input-group">
+                  <input type="number" name="projekt" formControlName="projekt" class="form-control" id="inputProjectPopUp"
+                          aria-describedby="projektHelp" placeholder="ProjektNr.">
+                          <span class="input-group-btn">
+                              <button type="button" class="btn">Suchen</button>
+                        </span>  
+                </div>
+            </div>
+          </form>
           <div *ngIf="submitted && selectedProjectSet()" class="error">
               <small class="form-text text-warning">Eine Projekt muss ausgewählt werden!
               </small>

@@ -57,4 +57,12 @@ public class UserDTO {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public AuthorityType getAuthorityType() {
+        return authorityType;
+    }
+
+    public void setAuthorityType(AuthorityType authorityType) {
+        this.authorityType = authorityType;
+    }
 }

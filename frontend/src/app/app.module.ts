@@ -13,6 +13,7 @@ import {Globals} from './global/globals';
 import {httpInterceptorProviders} from './interceptors';
 import { LoginComponent } from './container/login/login.component';
 import { UserComponent } from './container/user/user.component';
+import { CreateProjectComponent } from './container/create-project/create-project.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { UserComponent } from './container/user/user.component';
     HeaderComponent,
     ProjectComponent,
     LoginComponent,
-    UserComponent
+    UserComponent,
+    CreateProjectComponent
   ],
   imports: [
     BrowserModule,

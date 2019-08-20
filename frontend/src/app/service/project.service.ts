@@ -18,4 +18,9 @@ export class ProjectService {
     return this.httpClient.get(this.projectBaseUri);
   }
 
+  getProjectsByFilter(projectNr: number){
+    console.log('Get Project with number: '+projectNr);
+    return this.httpClient.get(this.projectBaseUri + '/getAll'+ '?projectNr='+projectNr);
+  }
+
 } 

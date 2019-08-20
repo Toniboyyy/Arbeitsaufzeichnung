@@ -15,21 +15,33 @@ export class MainComponent implements OnInit {
   error: boolean = false;
   errorMessage: string = '';
   submitted: boolean = false;
+
   dayForm: FormGroup;
   filterForm: FormGroup;
+  timeForm: FormGroup;
+
+
+  filterDate: DayFilter;
+
   private days: Day[];
   totalTime: number;
-  filterDate: DayFilter;
+
+  selectedDay: Day;
+
 
 
   constructor(private router: Router, private mainService: MainService, private formBuilder: FormBuilder) {
        this.dayForm = this.formBuilder.group({
         dates: ['', [Validators.required]],
         start: ['', [Validators.required]],
-        finish: ['', [Validators.required]],
+        finish: ['', [Validators.required]]
       });
       this.filterForm = this.formBuilder.group({
         dates: ['', [Validators.required]]
+      });
+      this.timeForm = this.formBuilder.group({
+        start: ['', [Validators.required]],
+        finish: ['', [Validators.required]]
       });
   }
 
@@ -79,7 +91,6 @@ export class MainComponent implements OnInit {
   }
 
   deleteDay(day: Day){
-    console.log(day.id);
     this.mainService.deleteDay(day.id).subscribe(
       () => {
         this.loadCurrentDays();
@@ -135,14 +146,46 @@ export class MainComponent implements OnInit {
 
   formatDate(date: Date) {
     let month = '' + (date.getMonth() + 1);
-    let day = '' + date.getDate();
+    let day = '01';
     let year = date.getFullYear();
 
     if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
 
     return [year, month, day].join('-');
 }
+
+  setSelected(day: Day){
+    this.selectedDay = day;
+  }
+
+  submitDayToEdit(day: Day){
+    this.submitted = true;
+    if (this.timeForm.valid) {
+      const newDay: Day = new Day(day.id,
+        day.dates,
+        this.timeForm.controls.start.value,
+        this.timeForm.controls.finish.value,
+        null
+      );
+      console.log(this.timeForm.controls.start.value)
+      this.editDay(newDay);
+      this.clearForm();
+      
+    } else {
+      console.log('Invalid input');
+    }
+  }
+
+  editDay(day: Day){
+    this.mainService.editDay(day).subscribe(
+      () => {
+          this.loadCurrentDays();
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
+  }
 
 
 }

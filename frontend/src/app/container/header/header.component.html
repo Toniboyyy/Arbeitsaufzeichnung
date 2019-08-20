@@ -13,6 +13,9 @@
       <li class="nav-item">
         <a class="nav-link" *ngIf="authService.isLoggedIn() && isAdmin()" routerLink="/user" routerLinkActive="active">User hinzufügen</a>
       </li>
+      <li>
+        <a class="nav-link" *ngIf="authService.isLoggedIn() && isAdmin()" routerLink="/createProject" routerLinkActive="active">Projekte hinzufügen</a>
+      </li>
     </ul>
     <ul class="navbar-nav mr-5">
       <a class="nav-link" *ngIf="!authService.isLoggedIn()" routerLink="/" routerLinkActive="active">Login</a>

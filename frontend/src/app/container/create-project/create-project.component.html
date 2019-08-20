@@ -1,0 +1,42 @@
+<div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error! </strong> {{ errorMessage }}
+        <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="outerbox">
+        <h1 style="text-align: center;">Projekt hinzufügen</h1>
+        <form class="form" [formGroup]="userForm" (ngSubmit)="addUser()" style="text-align: center;">
+            <ul style="list-style-type:none">
+                <li>
+                    <label for="inputFilterVorname">Name: </label>
+                    <input type="string" name="firstname" formControlName="firstname" class="form" id="inputFilterVorname" placeholder="Projektname">
+                    <div *ngIf="submitted && userForm.controls.firstname.errors" class="error">
+                            <small class="form-text text-warning">Ein Vorname wird benötigt!
+                            </small>
+                    </div>
+                </li>
+                <li>
+                        <label for="inputFilterRePassword">ProjektNr: </label>
+                        <input type="number" name="second_pw" formControlName="second_pw" class="form" id="inputFilterRePassword" placeholder="Projektnummer">
+                        <div *ngIf="submitted && userForm.controls.second_pw.errors" class="error">
+                                <small class="form-text text-warning">Bestätigen sie das Passwort!
+                                </small>
+                        </div>
+                    </li>
+                <li>
+                    <label for="inputFilterRePassword">Beschreibung: </label>
+                    <input type="text" name="second_pw" formControlName="second_pw" class="form" id="inputFilterRePassword" placeholder="Beschreibung">
+                    <div *ngIf="submitted && userForm.controls.second_pw.errors" class="error">
+                            <small class="form-text text-warning">Bestätigen sie das Passwort!
+                            </small>
+                    </div>
+                </li>
+                <li>
+                    <button class="btn" (click)="addUser()">User hinzufügen</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+      
+      

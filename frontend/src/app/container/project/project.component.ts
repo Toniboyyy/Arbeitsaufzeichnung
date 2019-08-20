@@ -27,6 +27,7 @@ export class ProjectComponent implements OnInit {
   errorMessage: string;
 
   projectForm: FormGroup;
+  projectNrForm: FormGroup;
 
   totalTime: number
   selectedProject: Project;
@@ -39,6 +40,10 @@ export class ProjectComponent implements OnInit {
     this.projectForm = this.formBuilder.group({
       start: ['', [Validators.required]],
       finish: ['', [Validators.required]]
+    });
+
+    this.projectNrForm = this.formBuilder.group({
+      projectNr: ['', [Validators.required]]
     });
 
     this.loadDay();
@@ -78,6 +83,32 @@ export class ProjectComponent implements OnInit {
         this.defaultServiceErrorHandling(error);
       }
     );
+  }
+
+  deleteProjectTime(id: number){
+    this.projectTimeService.deleteProject(id).subscribe(      
+      () => {
+      this.loadProjectTimes();
+    },
+    error => {
+      this.defaultServiceErrorHandling(error);
+    });
+  }
+
+  getProjectsByProjektnr(){
+    if(this.projectNrForm.valid){
+        this.projectService.getProjectsByFilter(this.projectNrForm.controls.projectNr.value).subscribe(
+        (project: Project[]) => {
+          this.project = project;
+        },
+        error => {
+          this.defaultServiceErrorHandling(error);
+        });
+    }else{
+      console.log(this.projectNrForm.controls.projectNr.value);
+      console.log('Invalid input');
+    }
+
   }
 
 
@@ -122,6 +153,7 @@ export class ProjectComponent implements OnInit {
     error => {
       this.defaultServiceErrorHandling(error);
     });
+    this.clearForm();
   }
 }
 
@@ -138,4 +170,6 @@ export class ProjectComponent implements OnInit {
     this.projectForm.reset();
     this.submitted = false;
   }
+
+
 }

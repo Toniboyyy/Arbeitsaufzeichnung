@@ -9,11 +9,22 @@ import org.springframework.stereotype.Component;
 public class SimpleUserMapper implements UserMapper {
     @Override
     public UserWithoutPWDTO UserToUserWithoutPwDTO(User user) {
-        return null;
+        UserWithoutPWDTO userWithoutPWDTO = new UserWithoutPWDTO();
+        userWithoutPWDTO.setId(user.getId());
+        userWithoutPWDTO.setFirstname(user.getFirstname());
+        userWithoutPWDTO.setLastname(user.getLastname());
+        userWithoutPWDTO.setUsername(user.getUsername());
+        return userWithoutPWDTO;
     }
 
     @Override
     public User UserDTOToUser(UserDTO userDTO) {
-        return null;
+        User user = new User();
+        user.setId(userDTO.getId());
+        user.setFirstname(userDTO.getFirstname());
+        user.setLastname(userDTO.getLastname());
+        user.setPassword(userDTO.getPassword());
+        user.setUsername(userDTO.getUsername());
+        return user;
     }
 }

@@ -17,7 +17,8 @@ public class ProjectTime {
     @Column(nullable = false)
     private LocalTime finish_time;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn
     private Project project;
 
     @ManyToOne

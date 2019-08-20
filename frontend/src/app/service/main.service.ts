@@ -36,4 +36,9 @@ export class MainService {
     return this.httpClient.get<Day>(this.dayBaseUri + '?dayId='+id);
   }
 
+  editDay(day: Day): Observable<Day> {
+    console.log('Edit Day with Id '+day.id);
+    return this.httpClient.put<Day>(this.dayBaseUri, day);
+  }
+
 }

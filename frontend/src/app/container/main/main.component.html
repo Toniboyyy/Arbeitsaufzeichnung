@@ -30,7 +30,7 @@
         <td>{{day.working_hours| number: '.0-2'}}</td>
         <td> </td>
         <td>
-        <img src="assets/iconmonstr-pencil-8.svg" title="Bearbeiten" data-toggle="modal" data-target=".edit-day-modal">
+        <img src="assets/iconmonstr-pencil-8.svg" title="Bearbeiten" data-toggle="modal" data-target=".edit-day-modal" (click)="setSelected(day)">
         <img src="assets/iconmonstr-plus-5.svg" title="Projekt hinzufügen" [routerLink]="['/project', day.id]">
         <img src="assets/iconmonstr-x-mark-1.svg" title="Löschen" (click)="deleteDay(day)">
         </td>
@@ -107,29 +107,25 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          <form class="form" [formGroup]="dayForm" (ngSubmit)="editDay()">
-
+        <div class="modal-body" *ngIf="selectedDay !== undefined">
+          <form class="form" [formGroup]="timeForm" (ngSubmit)="submitDayToEdit(selectedDay)">
+              <div class="form-group">
+                  <label for="inputDay">Tag</label>
+                  <input type="date" name="day" class="form-control" id="inputDay"
+                         aria-describedby="titleHelp" value="{{selectedDay.dates}}" readonly>
+              </div>
             <div class="form-group">
               <label for="inputStart">Ankunft</label>
               <input type="time" name="start" formControlName="start" class="form-control" id="inputStart"
-                        aria-describedby="startHelp" placeholder="Zeit der Ankunft">
-              <div *ngIf="submitted && dayForm.controls.start.errors.required" class="error">
-                <small class="form-text text-warning">Eine Ankunftszeit wird benötigt!
-                </small>
-              </div>
+                        aria-describedby="startHelp" placeholder="Zeit der Ankunft" value="{{selectedDay.start}}">
             </div>
   
             <div class="form-group">
               <label for="inputFinish">Abreise</label>
               <input type="time" name="finish" formControlName="finish" class="form-control" id="inputFinish"
-                        aria-describedby="finishHelp" placeholder="Zeit der Abreise">
-              <div *ngIf="submitted && dayForm.controls.finish.errors.required" class="error">
-                <small class="form-text text-warning">Eine Abreisezeit wird benötigt!
-                </small>
-              </div>
+                        aria-describedby="finishHelp" placeholder="Zeit der Abreise" value="{{selectedDay.finish}}">
             </div>
-            <button type="button" (click)="editDay()" class="btn btn-success">Arbeitsaufzeichnung ändern</button>
+            <button type="button" (click)="submitDayToEdit(selectedDay)" class="btn btn-success">Arbeitsaufzeichnung ändern</button>
           </form>
         </div>
       </div>

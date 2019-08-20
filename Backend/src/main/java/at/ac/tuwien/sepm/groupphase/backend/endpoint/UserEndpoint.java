@@ -31,7 +31,7 @@ public class UserEndpoint {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('Admin')")
+    @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation(value = "Create a User", authorizations = {@Authorization(value = "apiKey")})
     public UserWithoutPWDTO create(@RequestBody UserDTO userDTO){
         try {

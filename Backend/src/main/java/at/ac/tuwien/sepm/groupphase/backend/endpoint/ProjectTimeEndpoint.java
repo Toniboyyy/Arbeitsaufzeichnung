@@ -60,7 +60,14 @@ public class ProjectTimeEndpoint {
 
     @RequestMapping(method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete ProjectTime")
-    public void delete(Long id, Principal principal){
-        projectTimeService.delete(id,principal.getName());
+    public void delete(@RequestParam Long id, Principal principal) {
+        try {
+            projectTimeService.delete(id, principal.getName());
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
 }
