@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Project {
@@ -10,13 +11,14 @@ public class Project {
     @SequenceGenerator(name = "seq_project_id", sequenceName = "seq_project_id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private Long project_id;
 
     @Column(nullable = false)
     private String project_name;
 
     @Column
+    @Size(max = 255)
     private String project_desc;
 
     public Long getId() {

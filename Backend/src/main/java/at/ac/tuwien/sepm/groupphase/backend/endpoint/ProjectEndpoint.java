@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.security.Principal;
 import java.util.Set;
 
 @RestController
@@ -43,6 +44,8 @@ public class ProjectEndpoint {
     public Set<ProjectDTO> getByFilter(@RequestParam Long projectNr){
         try {
             return projectMapper.ProjectListToProjectDtoSet(projectService.getByFilter(projectNr));
+        } catch (ValidationException e){
+          throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         } catch (Exception e){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }

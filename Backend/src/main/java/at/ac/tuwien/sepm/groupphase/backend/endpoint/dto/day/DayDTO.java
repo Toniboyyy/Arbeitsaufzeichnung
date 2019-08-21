@@ -22,6 +22,8 @@ public class DayDTO {
 
     private Float working_hours;
 
+    private Float project_hours;
+
     public Long getId() {
         return id;
     }
@@ -60,5 +62,13 @@ public class DayDTO {
 
     public void setWorking_hours(Float working_hours) {
         this.working_hours = working_hours;
+    }
+
+    public Float getProject_hours() {
+        return project_hours;
+    }
+
+    public void setProject_hours(Float project_hours) {
+        this.project_hours = project_hours;
     }
 }

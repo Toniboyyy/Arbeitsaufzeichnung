@@ -34,23 +34,22 @@ img {
     margin-bottom: 10px;
 }
 
-#inputFilter {
-    width: 65%;
-    text-align: center;
-    margin-left: 15%;
-    margin-right: auto;
-    margin-bottom: 25px;
-}
 
 .form {
       background-color: white;
       background-repeat: no-repeat;
 }
-
-.btn {
-    margin-left: 2%;
+.data-display{
+    margin-bottom: 2%;
+    table-layout: fixed; 
+    width: 80%;
+    text-align: left;
 }
 
+.active-cyan-4{
+    margin: auto;
+    width: 80%;
+}
 
 
 

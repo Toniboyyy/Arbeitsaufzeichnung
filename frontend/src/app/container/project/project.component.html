@@ -9,30 +9,19 @@
 
 <div class="outerbox">
   <h1 style="text-align: center;">Projekt Zeiten</h1>
-  <h4 style="text-align: center;"> Datum: {{day.dates}} </h4>
+  <h4 style="text-align: center;" *ngIf="day != undefined"> Datum: {{day.dates}} </h4>
 
   <table align="center" class="data-display">
-      <tr class="">
-        <th>Soll-Zeit: </th>
+      <tr>
+        <th>Soll-Zeit: {{allocatedTime}}</th>
         <th>Ist-Zeit: {{totalTime}}</th>
       </tr>
       <tr>
-        <th>Saldo: </th>
-        <th>Differenz Soll/Projekt-Zeit: </th>
+        <th>Saldo: {{totalTime - allocatedTime}}</th>
+        <th>Differenz Tages/Projekt-Zeit: {{ totalTime - day.working_hours}}</th>
       </tr>
   </table>
 
-  <form class="form" [formGroup]="projectNrForm" (ngSubmit)="getProjectsByProjektnr()">
-    <div class="active-cyan-4 mb-4" align="center">
-      <div class="input-group">
-        <input type="number" name="projekt"  class="form-control" id="inputProject"
-                aria-describedby="projektHelp" placeholder="ProjektNr.">
-                <span class="input-group-btn">
-                    <button type="button" class="btn" (click)="getProjectsByProjektnr()">Suchen</button>
-              </span>  
-      </div>   
-    </div>
-  </form>
   <table align="center" class="tableProjektTime">
     <tr>
       <th>Projektnummer</th>
@@ -98,7 +87,7 @@
 
           <div class="box right">
             <ul style="list-style: none;">
-              <li>Datum: <a>{{day.dates}}</a>
+              <li>Datum: <a *ngIf="day != undefined">{{day.dates}}</a>
               </li>
               <li>Zeit:
               </li>
@@ -112,10 +101,10 @@
           <form class="form" [formGroup]="projectNrForm" (ngSubmit)="getProjectsByProjektnr()">
               <div class="active-cyan-4 mb-4">
                 <div class="input-group">
-                  <input type="number" name="projekt" formControlName="projekt" class="form-control" id="inputProjectPopUp"
+                  <input type="number" min="1" name="projekt" formControlName="projectNr" class="form-control" id="inputProjectPopUp"
                           aria-describedby="projektHelp" placeholder="ProjektNr.">
                           <span class="input-group-btn">
-                              <button type="button" class="btn">Suchen</button>
+                              <button type="button" class="btn" (click)="getProjectsByProjektnr()">Suchen</button>
                         </span>  
                 </div>
             </div>

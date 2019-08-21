@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.day.DayDTO;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.day.DayFilterDTO;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Day;
 import at.ac.tuwien.sepm.groupphase.backend.entity.DayFilter;
+import at.ac.tuwien.sepm.groupphase.backend.entity.ProjectTime;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -29,9 +30,15 @@ public class SimpleDayMapper implements DayMapper {
         dayDTO.setDates(day.getWork_date());
         dayDTO.setStart(day.getStart_time());
         dayDTO.setFinish(day.getFinish_time());
-        float hours = (float) day.getFinish_time().getHour() - day.getStart_time().getHour();
-        hours += (float) (day.getFinish_time().getMinute() - day.getStart_time().getMinute())/60;
-        dayDTO.setWorking_hours(hours);
+        float day_hours = (float) day.getFinish_time().getHour() - day.getStart_time().getHour();
+        day_hours += (float) (day.getFinish_time().getMinute() - day.getStart_time().getMinute())/60;
+        dayDTO.setWorking_hours(day_hours);
+        float project_hours = 0f;
+        for(ProjectTime projectTime: day.getProject_times()){
+            project_hours += (float) projectTime.getFinish_time().getHour() - projectTime.getStart_time().getHour();
+            project_hours += (float)  (projectTime.getFinish_time().getMinute() - projectTime.getStart_time().getMinute())/60;
+        }
+        dayDTO.setProject_hours(project_hours);
         return dayDTO;
     }
 

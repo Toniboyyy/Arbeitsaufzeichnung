@@ -4,7 +4,8 @@ export class Day {
     public dates: String,
     public start: String,
     public finish: String,
-    public working_hours: number
+    public working_hours: number,
+    public project_hours: number
     ) {
   }
 }

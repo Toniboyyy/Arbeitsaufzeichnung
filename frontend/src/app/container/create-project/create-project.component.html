@@ -6,37 +6,39 @@
       </div>
       <div class="outerbox">
         <h1 style="text-align: center;">Projekt hinzufügen</h1>
-        <form class="form" [formGroup]="userForm" (ngSubmit)="addUser()" style="text-align: center;">
+        <div class="middleForm">
+        <form class="form" [formGroup]="projectForm" (ngSubmit)="addProject()" style="text-align: center;">
             <ul style="list-style-type:none">
                 <li>
-                    <label for="inputFilterVorname">Name: </label>
-                    <input type="string" name="firstname" formControlName="firstname" class="form" id="inputFilterVorname" placeholder="Projektname">
-                    <div *ngIf="submitted && userForm.controls.firstname.errors" class="error">
-                            <small class="form-text text-warning">Ein Vorname wird benötigt!
+                    <label for="inputFilterName">Name: </label>
+                    <input type="text" name="name" formControlName="name" class="form" id="inputFilterName" placeholder="Projektname">
+                    <div *ngIf="submitted && projectForm.controls.name.errors.required" class="error">
+                            <small class="form-text text-warning">Ein Name wird benötigt!
                             </small>
                     </div>
                 </li>
                 <li>
-                        <label for="inputFilterRePassword">ProjektNr: </label>
-                        <input type="number" name="second_pw" formControlName="second_pw" class="form" id="inputFilterRePassword" placeholder="Projektnummer">
-                        <div *ngIf="submitted && userForm.controls.second_pw.errors" class="error">
-                                <small class="form-text text-warning">Bestätigen sie das Passwort!
-                                </small>
-                        </div>
-                    </li>
+                    <label for="inputFilterProjectNumber">ProjektNr: </label>
+                    <input type="number" min="1" name="projectnumber" formControlName="projectnumber" class="form" id="inputFilterProjectNumber" placeholder="Projektnummer">
+                    <div *ngIf="submitted && projectForm.controls.projectnumber.errors" class="error">
+                            <small class="form-text text-warning">Eine Projectnummer wird benötig!
+                            </small>
+                    </div>
+                </li>
                 <li>
-                    <label for="inputFilterRePassword">Beschreibung: </label>
-                    <input type="text" name="second_pw" formControlName="second_pw" class="form" id="inputFilterRePassword" placeholder="Beschreibung">
-                    <div *ngIf="submitted && userForm.controls.second_pw.errors" class="error">
+                    <label for="inputFilterDesc">Beschreibung: </label>
+                    <input type="text" name="desc" formControlName="desc" class="form" id="inputFilterDesc" placeholder="Beschreibung">
+                    <div *ngIf="submitted && projectForm.controls.desc.errors" class="error">
                             <small class="form-text text-warning">Bestätigen sie das Passwort!
                             </small>
                     </div>
                 </li>
                 <li>
-                    <button class="btn" (click)="addUser()">User hinzufügen</button>
+                    <button class="btn" (click)="addProject()">Projekt hinzufügen</button>
                 </li>
             </ul>
         </form>
     </div>
+</div>
       
       

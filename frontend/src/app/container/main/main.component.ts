@@ -50,6 +50,10 @@ export class MainComponent implements OnInit {
     this.loadCurrentDays();
   }
 
+  loadTime(){
+  }
+
+
   loadCurrentDays(){
     this.mainService.getDay(this.filterDate).subscribe(
       (day: Day[]) => {
@@ -79,7 +83,7 @@ export class MainComponent implements OnInit {
         this.dayForm.controls.dates.value,
         this.dayForm.controls.start.value,
         this.dayForm.controls.finish.value,
-        null
+        null, null
       );
       console.log(this.dayForm.controls.dates.value)
       this.createDay(day);
@@ -165,7 +169,7 @@ export class MainComponent implements OnInit {
         day.dates,
         this.timeForm.controls.start.value,
         this.timeForm.controls.finish.value,
-        null
+        null, null
       );
       console.log(this.timeForm.controls.start.value)
       this.editDay(newDay);

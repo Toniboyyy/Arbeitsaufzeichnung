@@ -14,6 +14,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("SELECT p FROM Project p")
     List<Project> getAll();
 
-    @Query("SELECT p FROM Project p WHERE p.project_id LIKE %:number%")
-    List<Project> getByFilter(@Param("number")Long number);
+    @Query("SELECT p FROM Project p WHERE p.project_id = ?1")
+    List<Project> getByFilter(Long number);
 }

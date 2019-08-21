@@ -10,9 +10,26 @@
 <div class="outerbox">
   <h1 style="text-align: center;">Arbeitsaufzeichnung</h1>
 
+  <table align="center" class="data-display">
+      <tr>
+        <th>Soll-Zeit: </th>
+        <th>Ist-Zeit: {{totalTime}}</th>
+      </tr>
+      <tr>
+        <th>Saldo: </th>
+        <th>Differenz Soll/Projekt-Zeit: </th>
+      </tr>
+  </table>
+
   <form class="form" [formGroup]="filterForm" (ngSubmit)="filterMonths()">
-      <input type="month" name="day" formControlName="dates" class="form" id="inputFilter" placeholder="Datum">
-      <button type="button" (click)="filterMonths()" class="btn ">Suchen</button>
+      <div class="active-cyan-4 mb-4">
+          <div class="input-group">
+            <input type="month" name="day" formControlName="dates" class="form-control" id="inputFilter" placeholder="Datum">
+                    <span class="input-group-btn">
+                        <button type="button" (click)="filterMonths()" class="btn ">Suchen</button>
+                  </span>  
+          </div>
+      </div>
   </form>
 
 
@@ -28,7 +45,7 @@
         <td>{{day.dates}}</td>
         <td>{{day.start}} - {{day.finish}}</td>
         <td>{{day.working_hours| number: '.0-2'}}</td>
-        <td> </td>
+        <td>{{day.project_hours| number: '.0-2'}}</td>
         <td>
         <img src="assets/iconmonstr-pencil-8.svg" title="Bearbeiten" data-toggle="modal" data-target=".edit-day-modal" (click)="setSelected(day)">
         <img src="assets/iconmonstr-plus-5.svg" title="Projekt hinzufügen" [routerLink]="['/project', day.id]">

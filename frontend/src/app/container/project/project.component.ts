@@ -9,6 +9,7 @@ import { ProjectTimeService } from 'src/app/service/project-time.service';
 import { Project } from 'src/app/dtos/project';
 import { isUndefined, isNullOrUndefined } from 'util';
 import { Day } from 'src/app/dtos/day';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-project',
@@ -33,6 +34,7 @@ export class ProjectComponent implements OnInit {
   selectedProject: Project;
 
   submitted: boolean = false;
+  allocatedTime: number; 
 
   constructor(private route: ActivatedRoute, private projectService: ProjectService, private formBuilder: FormBuilder, private projectTimeService: ProjectTimeService, private dayService: MainService) { }
 
@@ -49,7 +51,7 @@ export class ProjectComponent implements OnInit {
     this.loadDay();
     this.loadProjectTimes();
     this.loadProjects();
-    console.log(this.projectForm.controls.start.errors.required);
+    
   }
 
   loadDay(){
@@ -58,9 +60,36 @@ export class ProjectComponent implements OnInit {
       return this.dayService.getDayById(parseInt(params.get('id'),0));
       })).subscribe(
         (day: Day) => {
-          this.day = day; 
+          this.day = day;
+          this.setTimes();
         },
         error => this.defaultServiceErrorHandling(error));
+  }
+
+  setTimes(){
+    const date: Date = this.parse(this.day.dates);
+    const today: number = date.getDay();
+    if(1 <= today && today <= 5){
+      this.allocatedTime = 8.5;
+    }else if(today == 6){
+      this.allocatedTime = 5.75;
+    }
+  }
+
+  parse(value: any): Date | null {
+    if ((typeof value === 'string') && (value.indexOf('/') > -1)) {
+      const str = value.split('/');
+
+      const year = Number(str[2]);
+      const month = Number(str[1]) - 1;
+      const date = Number(str[0]);
+
+      return new Date(year, month, date);
+    } else if((typeof value === 'string') && value === '') {
+      return new Date();
+    }
+    const timestamp = typeof value === 'number' ? value : Date.parse(value);
+    return isNaN(timestamp) ? null : new Date(timestamp);
   }
 
   
@@ -111,8 +140,6 @@ export class ProjectComponent implements OnInit {
 
   }
 
-
-
   setTotalTime() {
     this.totalTime = 0;
     for(let index = 0; index < this.projectTimes.length; index++)
@@ -143,7 +170,7 @@ export class ProjectComponent implements OnInit {
       const project: ProjectTime = new ProjectTime(null,
         this.projectForm.controls.start.value,
         this.projectForm.controls.finish.value, 
-        null,new Project(this.selectedProject.id, null, null, null), new Day(this.dayId,null,null,null,null)
+        null,new Project(this.selectedProject.id, null, null, null), new Day(this.dayId,null,null,null,null,null)
       );
 
     this.projectTimeService.addProject(project, this.dayId).subscribe(      
