@@ -16,13 +16,9 @@ public class DayDTO {
 
     private LocalDate dates;
 
-    private LocalTime start;
-
-    private LocalTime finish;
-
-    private Float working_hours;
-
     private Float project_hours;
+
+    private int project_amount;
 
     public Long getId() {
         return id;
@@ -40,29 +36,6 @@ public class DayDTO {
         this.dates = dates;
     }
 
-    public LocalTime getStart() {
-        return start;
-    }
-
-    public void setStart(LocalTime start) {
-        this.start = start;
-    }
-
-    public LocalTime getFinish() {
-        return finish;
-    }
-
-    public void setFinish(LocalTime finish) {
-        this.finish = finish;
-    }
-
-    public Float getWorking_hours() {
-        return working_hours;
-    }
-
-    public void setWorking_hours(Float working_hours) {
-        this.working_hours = working_hours;
-    }
 
     public Float getProject_hours() {
         return project_hours;
@@ -70,5 +43,13 @@ public class DayDTO {
 
     public void setProject_hours(Float project_hours) {
         this.project_hours = project_hours;
+    }
+
+    public int getProject_amount() {
+        return project_amount;
+    }
+
+    public void setProject_amount(int project_amount) {
+        this.project_amount = project_amount;
     }
 }

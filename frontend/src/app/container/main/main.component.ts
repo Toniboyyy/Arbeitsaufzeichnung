@@ -18,7 +18,6 @@ export class MainComponent implements OnInit {
 
   dayForm: FormGroup;
   filterForm: FormGroup;
-  timeForm: FormGroup;
 
 
   filterDate: DayFilter;
@@ -32,16 +31,10 @@ export class MainComponent implements OnInit {
 
   constructor(private router: Router, private mainService: MainService, private formBuilder: FormBuilder) {
        this.dayForm = this.formBuilder.group({
-        dates: ['', [Validators.required]],
-        start: ['', [Validators.required]],
-        finish: ['', [Validators.required]]
+        dates: ['', [Validators.required]]
       });
       this.filterForm = this.formBuilder.group({
         dates: ['', [Validators.required]]
-      });
-      this.timeForm = this.formBuilder.group({
-        start: ['', [Validators.required]],
-        finish: ['', [Validators.required]]
       });
   }
 
@@ -50,8 +43,6 @@ export class MainComponent implements OnInit {
     this.loadCurrentDays();
   }
 
-  loadTime(){
-  }
 
 
   loadCurrentDays(){
@@ -70,19 +61,11 @@ export class MainComponent implements OnInit {
     this.router.navigate(['/project']);
   }
 
-  setTotalTime() {
-    this.totalTime = 0;
-    for(let index = 0; index < this.days.length; index++)
-    this.totalTime += this.days[index].working_hours;
-  }
-
   addDay(){
     this.submitted = true;
     if (this.dayForm.valid) {
       const day: Day = new Day(null,
         this.dayForm.controls.dates.value,
-        this.dayForm.controls.start.value,
-        this.dayForm.controls.finish.value,
         null, null
       );
       console.log(this.dayForm.controls.dates.value)
@@ -162,19 +145,15 @@ export class MainComponent implements OnInit {
     this.selectedDay = day;
   }
 
-  submitDayToEdit(day: Day){
+  submitDayToEdit(day: Day){    //TODO: Change Day
     this.submitted = true;
-    if (this.timeForm.valid) {
+    if (this.dayForm.valid) {
       const newDay: Day = new Day(day.id,
-        day.dates,
-        this.timeForm.controls.start.value,
-        this.timeForm.controls.finish.value,
+        this.dayForm.controls.dates.value,
         null, null
       );
-      console.log(this.timeForm.controls.start.value)
       this.editDay(newDay);
       this.clearForm();
-      
     } else {
       console.log('Invalid input');
     }
@@ -189,6 +168,13 @@ export class MainComponent implements OnInit {
         this.defaultServiceErrorHandling(error);
       }
     );
+  }
+
+  setTotalTime(){
+    this.totalTime = 0;
+    for(let i = 0; i < this.days.length; i++){
+      this.totalTime += this.days[i].project_hours;
+    }
   }
 
 

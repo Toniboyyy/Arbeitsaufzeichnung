@@ -47,7 +47,6 @@ public class DayEndpoint {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    @PreAuthorize("hasRole('ADMIN') or hasRole('User')")
     @ApiOperation(value = "Add Day", authorizations = {@Authorization(value = "apiKey")})
     public DayDTO add(@RequestBody DayDTO dayDTO, Principal principal){
         try{

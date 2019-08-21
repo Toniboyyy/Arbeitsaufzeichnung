@@ -17,8 +17,6 @@ public class SimpleDayMapper implements DayMapper {
     public Day DayDtoToDay(DayDTO dayDTO) {
         Day day = new Day();
         day.setId(dayDTO.getId());
-        day.setStart_time(dayDTO.getStart());
-        day.setFinish_time(dayDTO.getFinish());
         day.setWork_date(dayDTO.getDates());
         return day;
     }
@@ -28,17 +26,13 @@ public class SimpleDayMapper implements DayMapper {
         DayDTO dayDTO = new DayDTO();
         dayDTO.setId(day.getId());
         dayDTO.setDates(day.getWork_date());
-        dayDTO.setStart(day.getStart_time());
-        dayDTO.setFinish(day.getFinish_time());
-        float day_hours = (float) day.getFinish_time().getHour() - day.getStart_time().getHour();
-        day_hours += (float) (day.getFinish_time().getMinute() - day.getStart_time().getMinute())/60;
-        dayDTO.setWorking_hours(day_hours);
         float project_hours = 0f;
         for(ProjectTime projectTime: day.getProject_times()){
             project_hours += (float) projectTime.getFinish_time().getHour() - projectTime.getStart_time().getHour();
             project_hours += (float)  (projectTime.getFinish_time().getMinute() - projectTime.getStart_time().getMinute())/60;
         }
         dayDTO.setProject_hours(project_hours);
+        dayDTO.setProject_amount(day.getProject_times().size());
         return dayDTO;
     }
 

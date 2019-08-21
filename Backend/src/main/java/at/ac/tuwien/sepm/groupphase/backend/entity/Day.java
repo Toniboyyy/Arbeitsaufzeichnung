@@ -23,11 +23,6 @@ public class Day {
     @Column(nullable = false, name = "work_date")
     private LocalDate work_date;
 
-    @Column(nullable = false)
-    private LocalTime start_time;
-
-    @Column(nullable = false)
-    private LocalTime finish_time;
 
     @OneToMany(mappedBy = "day", fetch = FetchType.LAZY)
     private Set<ProjectTime> project_times;
@@ -57,21 +52,6 @@ public class Day {
         this.project_times = project_times;
     }
 
-    public LocalTime getStart_time() {
-        return start_time;
-    }
-
-    public void setStart_time(LocalTime start_time) {
-        this.start_time = start_time;
-    }
-
-    public LocalTime getFinish_time() {
-        return finish_time;
-    }
-
-    public void setFinish_time(LocalTime finish_time) {
-        this.finish_time = finish_time;
-    }
 
     public User getUser() {
         return user;

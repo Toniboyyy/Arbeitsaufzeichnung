@@ -11,11 +11,8 @@ public class DayValidatorImpl implements Validator<Day>{
         if (d == null){
             throw new ValidationException("Filter can't be null");
         }
-        if(d.getStart_time() == null || d.getFinish_time() == null || d.getWork_date() == null){
+        if(d.getWork_date() == null){
             throw new ValidationException("Dates and time can't be null");
-        }
-        if(d.getStart_time().isAfter(d.getFinish_time())){
-            throw new ValidationException("Time can't be negativ");
         }
     return true;
     }

@@ -170,7 +170,7 @@ export class ProjectComponent implements OnInit {
       const project: ProjectTime = new ProjectTime(null,
         this.projectForm.controls.start.value,
         this.projectForm.controls.finish.value, 
-        null,new Project(this.selectedProject.id, null, null, null), new Day(this.dayId,null,null,null,null,null)
+        null,new Project(this.selectedProject.id, null, null, null), new Day(this.dayId,null,null,null)
       );
 
     this.projectTimeService.addProject(project, this.dayId).subscribe(      
