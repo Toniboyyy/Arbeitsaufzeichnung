@@ -15,10 +15,7 @@
       <tr>
         <th>Soll-Zeit: {{allocatedTime}}</th>
         <th>Ist-Zeit: {{totalTime}}</th>
-      </tr>
-      <tr>
         <th>Saldo: {{totalTime - allocatedTime}}</th>
-        <th>Differenz Tages/Projekt-Zeit: {{ totalTime - day.working_hours}}</th>
       </tr>
   </table>
 
@@ -89,11 +86,9 @@
             <ul style="list-style: none;">
               <li>Datum: <a *ngIf="day != undefined">{{day.dates}}</a>
               </li>
-              <li>Zeit:
-              </li>
               <li>Projekt: <a *ngIf="!selectedProjectSet()">{{selectedProject.name}}</a>
               </li>
-              <li>Tageszeit:
+              <li>Zeit:
               </li>
             </ul>
           </div>

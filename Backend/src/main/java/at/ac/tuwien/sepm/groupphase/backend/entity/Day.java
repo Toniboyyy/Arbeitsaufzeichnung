@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,8 +25,8 @@ public class Day {
     private LocalDate work_date;
 
 
-    @OneToMany(mappedBy = "day", fetch = FetchType.LAZY)
-    private Set<ProjectTime> project_times;
+    @OneToMany(mappedBy = "day", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ProjectTime> project_times = new HashSet<>();
 
 
     public Long getId() {

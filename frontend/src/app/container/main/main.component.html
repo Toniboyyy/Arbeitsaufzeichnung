@@ -12,9 +12,9 @@
 
   <table align="center" class="data-display">
       <tr>
-        <th>Soll-Zeit: </th>
+        <th>Soll-Zeit: {{allocatedMonthTime}}</th>
         <th>Ist-Zeit: {{totalTime}}</th>
-        <th>Saldo: </th>
+        <th>Saldo: {{totalTime - allocatedMonthTime}} </th>
       </tr>
   </table>
 
@@ -39,7 +39,7 @@
       </tr>
       <tr *ngFor="let day of days">
         <td>{{day.dates}}</td>
-        <td></td>
+        <td>{{day.project_amount}}</td>
         <td>{{day.project_hours| number: '.0-2'}}</td>
         <td>
         <img src="assets/iconmonstr-pencil-8.svg" title="Bearbeiten" data-toggle="modal" data-target=".edit-day-modal" (click)="setSelected(day)">
@@ -99,11 +99,16 @@
           </button>
         </div>
         <div class="modal-body" *ngIf="selectedDay !== undefined">
-          <form class="form" [formGroup]="dayForm" (ngSubmit)="submitDayToEdit(selectedDay)">
+          <form class="form" [formGroup]="editForm" (ngSubmit)="submitDayToEdit(selectedDay)">
               <div class="form-group">
                   <label for="inputDay">Tag</label>
-                  <input type="date" name="day" class="form-control" id="inputDay"
+                  <input type="date" name="day" formControlName="dates" class="form-control" id="inputDay"
                          aria-describedby="titleHelp" value="{{selectedDay.dates}}">
+              </div>
+              <div *ngIf="submitted && editForm.controls.dates.errors" class="error">
+                <small class="form-text text-warning">Ein Datum
+                  wird benötigt!
+                </small>
               </div>
             <button type="button" (click)="submitDayToEdit(selectedDay)" class="btn btn-success">Arbeitsaufzeichnung ändern</button>
           </form>

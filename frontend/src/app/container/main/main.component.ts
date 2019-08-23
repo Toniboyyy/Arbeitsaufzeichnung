@@ -18,7 +18,7 @@ export class MainComponent implements OnInit {
 
   dayForm: FormGroup;
   filterForm: FormGroup;
-
+  editForm: FormGroup;
 
   filterDate: DayFilter;
 
@@ -27,6 +27,7 @@ export class MainComponent implements OnInit {
 
   selectedDay: Day;
 
+  allocatedMonthTime: number;
 
 
   constructor(private router: Router, private mainService: MainService, private formBuilder: FormBuilder) {
@@ -34,6 +35,9 @@ export class MainComponent implements OnInit {
         dates: ['', [Validators.required]]
       });
       this.filterForm = this.formBuilder.group({
+        dates: ['', [Validators.required]]
+      });
+      this.editForm = this.formBuilder.group({
         dates: ['', [Validators.required]]
       });
   }
@@ -46,15 +50,36 @@ export class MainComponent implements OnInit {
 
 
   loadCurrentDays(){
+    this.loadMonthTime();
     this.mainService.getDay(this.filterDate).subscribe(
       (day: Day[]) => {
         this.days = day;
-        this.setTotalTime()
+        this.setTotalTime();
+        this.loadMonthTime();
       },
       error => {
         this.defaultServiceErrorHandling(error);
       }
     );
+  }
+
+  loadMonthTime(){
+    const date: Date = this.parse(this.filterDate.dates);
+    var d = new Date(date.getFullYear(),date.getMonth(), 0).getDate();
+    this.allocatedMonthTime = 0;
+    
+    for(var count = 0; count < d; count++){
+      this.allocatedMonthTime += this.isWeekday(new Date(date.getFullYear(),date.getMonth(), count+1))
+    }
+  }
+
+  isWeekday(day: Date): number{
+    if(day.getDay() == 0 || day.getDay() == 6){
+      return 0;
+    }else if(day.getDay() == 5){
+      return 5.75;
+    }
+    return 8.5;
   }
 
   goToProject(){
@@ -145,11 +170,12 @@ export class MainComponent implements OnInit {
     this.selectedDay = day;
   }
 
-  submitDayToEdit(day: Day){    //TODO: Change Day
+  submitDayToEdit(day: Day){
     this.submitted = true;
+    console.log(this.editForm.controls.dates.value);
     if (this.dayForm.valid) {
       const newDay: Day = new Day(day.id,
-        this.dayForm.controls.dates.value,
+        this.editForm.controls.dates.value,
         null, null
       );
       this.editDay(newDay);
@@ -175,6 +201,22 @@ export class MainComponent implements OnInit {
     for(let i = 0; i < this.days.length; i++){
       this.totalTime += this.days[i].project_hours;
     }
+  }
+
+  parse(value: any): Date | null {
+    if ((typeof value === 'string') && (value.indexOf('/') > -1)) {
+      const str = value.split('/');
+
+      const year = Number(str[2]);
+      const month = Number(str[1]) - 1;
+      const date = Number(str[0]);
+
+      return new Date(year, month, date);
+    } else if((typeof value === 'string') && value === '') {
+      return new Date();
+    }
+    const timestamp = typeof value === 'number' ? value : Date.parse(value);
+    return isNaN(timestamp) ? null : new Date(timestamp);
   }
 
 

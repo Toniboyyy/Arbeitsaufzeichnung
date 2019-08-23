@@ -18,11 +18,11 @@ public class ProjectTime {
     private LocalTime finish_time;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(nullable = false)
     private Project project;
 
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(nullable = false)
     private Day day;
 
     public Long getId() {

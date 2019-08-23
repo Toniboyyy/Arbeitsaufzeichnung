@@ -39,6 +39,7 @@ public class UserEndpoint {
         }catch (ValidationException e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
+            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -74,8 +74,16 @@ public class DayEndpoint {
 
     @RequestMapping(method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete Day", authorizations = {@Authorization(value = "apiKey")})
-    public void delete(@RequestParam Long id, Principal principal){
-        dayService.delete(id, principal.getName());
+    public void delete(@RequestParam Long id, Principal principal) {
+        try {
+            dayService.delete(id, principal.getName());
+        } catch (ValidationException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        } catch (NotFoundException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @RequestMapping(method = RequestMethod.GET)

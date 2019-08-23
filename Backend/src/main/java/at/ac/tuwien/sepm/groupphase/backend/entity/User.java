@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Enum.AuthorityType;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -36,7 +37,7 @@ public class User {
     private String password;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private Set<Day> days;
+    private Set<Day> days = new HashSet<>();
 
 
     public String getUsername() {

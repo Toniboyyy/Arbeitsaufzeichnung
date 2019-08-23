@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { User } from 'src/app/dtos/user';
 import { UserService } from 'src/app/service/user.service';
+import { isNullOrUndefined } from 'util';
+
 
 @Component({
   selector: 'app-user',
@@ -29,6 +31,7 @@ export class UserComponent implements OnInit {
   ngOnInit() {
   }
 
+
     /**
    * Error flag will be deactivated, which clears the error message
    */
@@ -48,6 +51,7 @@ export class UserComponent implements OnInit {
 
   private clearForm() {
     this.userForm.reset();
+    this.submitted = false;
   }
 
   addUser(){
@@ -60,19 +64,23 @@ export class UserComponent implements OnInit {
         this.userForm.controls.password.value);
         this.userService.createUser(user).subscribe( 
           (user: User) => {
-            this.user = user;
+            this.user = user;console.log(this.user);
           }, 
-          error => 
-            this.defaultServiceErrorHandling(error));
+          error => {
+            this.defaultServiceErrorHandling(error);
+          });
+            this.clearForm();
     }else{
       console.log('Invalid Input');
     }
+    
   }
 
   passwordEqual(): boolean{
     return this.userForm.controls.password.value === this.userForm.controls.second_pw.value;
   }
 
-
-
+  userSet(): boolean{
+    return !isNullOrUndefined(this.user);
+    }
 }

@@ -54,10 +54,14 @@ public class DayServiceImpl implements DayService {
         return dayRepository.save(day);
     }
 
-    @Override                                       //TODO Authorization checken
+    @Override
     public void delete(Long id, String username) {
         if (id < 0){
             throw new ValidationException("Id can't be negativ.");
+        }
+        Optional<Day> dayOptional = dayRepository.getDayByUsernameAndId(username, id);
+        if(dayOptional.isEmpty()){
+            throw new NotFoundException("Day couldn't be found.");
         }
         dayRepository.deleteById(id);
     }

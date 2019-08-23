@@ -26,7 +26,10 @@ public interface DayRepository extends JpaRepository<Day, Long> {
     @Transactional
     @Modifying
     @Query("DELETE FROM Day d WHERE d.id = ?1")
-    void deleteById(Long id, String username);
+    void deleteById(Long id);
+
+    @Query("SELECT d FROM Day d WHERE d.id = ?2 AND d.user.username = ?1")
+    Optional<Day> getDayByUsernameAndId(String username, Long id);
 
 
     @Query("SELECT d from Day d JOIN User u ON d.user.id = u.id WHERE d.work_date >= ?1 AND d.work_date < ?2 AND u.username = ?3")
