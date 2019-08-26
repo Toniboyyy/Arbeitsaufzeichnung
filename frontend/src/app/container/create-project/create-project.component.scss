@@ -7,16 +7,32 @@
 
 label{
     margin-right: 5%;
-    padding: 0%;
 }
 
-ul{
-    list-style:none;
-    white-space: nowrap;
-    display: inline-block;
-    width: auto;
-}
+
 
 .middleForm{
     align-self: center;
+}
+
+.input-right{
+    margin: auto;
+    text-align: right;
+    margin-left: 0%;
+}
+
+.input-left{
+    text-align: left;
+    margin: auto;
+    margin-right: 3%;
+    width: 20%;
+}
+
+li{
+    width: 50%;
+    margin: auto;
+}
+
+#addProject{
+    margin-top: 3%;
 }

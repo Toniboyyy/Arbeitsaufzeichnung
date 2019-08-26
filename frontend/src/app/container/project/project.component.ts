@@ -176,6 +176,7 @@ export class ProjectComponent implements OnInit {
     this.projectTimeService.addProject(project, this.dayId).subscribe(      
       () => {
       this.loadProjectTimes();
+      this.loadProjects();
     },
     error => {
       this.defaultServiceErrorHandling(error);

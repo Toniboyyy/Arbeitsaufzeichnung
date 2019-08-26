@@ -8,7 +8,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" *ngIf="authService.isLoggedIn()" routerLink="/day" routerLinkActive="active">Tage</a>
+        <a class="nav-link" *ngIf="authService.isLoggedIn() " routerLink="/day" routerLinkActive="active">Tage</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" *ngIf="authService.isLoggedIn() && isAdmin()" routerLink="/user" routerLinkActive="active">User hinzufügen</a>

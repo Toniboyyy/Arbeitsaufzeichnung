@@ -4,32 +4,47 @@
           <span aria-hidden="true">&times;</span>
         </button>
 </div>
+
+<div *ngIf="project !== undefined" class="alert alert-success alert-dismissible fade show" role="alert">
+        <h4 class="alert-heading">Project sucessfully created!</h4>
+        <strong> Project {{ project.name }} was created! </strong>
+        <button type="button" (click)="vanishProject()" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+</div>
+
       <div class="outerbox">
         <h1 style="text-align: center;">Projekt hinzufügen</h1>
         <div class="middleForm">
         <form class="form" [formGroup]="projectForm" (ngSubmit)="addProject()" style="text-align: center;">
             <ul style="list-style-type:none">
                 <li>
-                    <label for="inputFilterName">Name: </label>
-                    <input type="text" name="name" formControlName="name" class="form" id="inputFilterName" placeholder="Projektname">
-                    <div *ngIf="submitted && projectForm.controls.name.errors.required" class="error">
+                    <div class="input-group">
+                        <div class="input-left"><label for="inputFilterName">Name: </label></div>
+                        <div class="input-right"><input type="text" name="name" formControlName="name" class="form" id="inputFilterName" placeholder="Projektname"></div>
+                    </div>
+                    <div *ngIf="submitted && projectForm.controls.name.errors" class="error">
                             <small class="form-text text-warning">Ein Name wird benötigt!
                             </small>
                     </div>
                 </li>
                 <li>
-                    <label for="inputFilterProjectNumber">ProjektNr: </label>
-                    <input type="number" min="1" name="projectnumber" formControlName="projectnumber" class="form" id="inputFilterProjectNumber" placeholder="Projektnummer">
+                    <div class="input-group">
+                        <div class="input-left"><label for="inputFilterProjectNumber">ProjektNr: </label> </div>
+                        <div class="input-right"><input type="number" min="1" name="projectnumber" formControlName="projectnumber" class="form" id="inputFilterProjectNumber" placeholder="Projektnummer"></div>
+                    </div>
                     <div *ngIf="submitted && projectForm.controls.projectnumber.errors" class="error">
                             <small class="form-text text-warning">Eine Projectnummer wird benötig!
                             </small>
                     </div>
                 </li>
                 <li>
-                    <label for="inputFilterDesc">Beschreibung: </label>
-                    <input type="text" name="desc" formControlName="desc" class="form" id="inputFilterDesc" placeholder="Beschreibung">
+                    <div class="input-group">
+                        <div class="input-left"><label for="inputFilterDesc">Beschreibung: </label></div>
+                        <div class="input-right"><input type="text" name="desc" formControlName="desc" class="form" id="inputFilterDesc" placeholder="Beschreibung"></div>
+                    </div>
                     <div *ngIf="submitted && projectForm.controls.desc.errors" class="error">
-                            <small class="form-text text-warning">Bestätigen sie das Passwort!
+                            <small class="form-text text-warning">Eine Beschreibung wird benötigt!
                             </small>
                     </div>
                 </li>

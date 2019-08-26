@@ -56,7 +56,7 @@ export class UserComponent implements OnInit {
 
   addUser(){
     this.submitted = true;
-    if(this.userForm.valid){
+    if(this.userForm.valid && this.passwordEqual()){
       const user = new User(null, 
         this.userForm.controls.username.value,
         this.userForm.controls.firstname.value,
@@ -83,4 +83,8 @@ export class UserComponent implements OnInit {
   userSet(): boolean{
     return !isNullOrUndefined(this.user);
     }
+
+  vanishUser() {
+    this.user = undefined;
+  }
 }

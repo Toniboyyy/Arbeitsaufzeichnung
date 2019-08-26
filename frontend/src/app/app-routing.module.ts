@@ -6,10 +6,11 @@ import { LoginComponent } from './container/login/login.component';
 import {AuthGuard} from './Guard/auth.guard';
 import { UserComponent } from './container/user/user.component';
 import { CreateProjectComponent } from './container/create-project/create-project.component';
+import { AdminGuard } from './Guard/admin.guard';
 
 
 const routes: Routes = [
-{ path: 'day',  canActivate: [AuthGuard], component: MainComponent },
+{ path: 'day',canActivate: [AuthGuard],  component: MainComponent },
 { path: 'project/:id', canActivate: [AuthGuard], component: ProjectComponent },
 { path: '', component: LoginComponent},
 { path: 'user', canActivate: [AuthGuard], component: UserComponent},

@@ -71,4 +71,8 @@ export class CreateProjectComponent implements OnInit {
     }
   }
 
+  vanishProject() {
+    this.project = undefined;
+  }
+
 }

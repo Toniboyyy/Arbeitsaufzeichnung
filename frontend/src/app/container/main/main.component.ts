@@ -173,7 +173,7 @@ export class MainComponent implements OnInit {
   submitDayToEdit(day: Day){
     this.submitted = true;
     console.log(this.editForm.controls.dates.value);
-    if (this.dayForm.valid) {
+    if (this.editForm.valid) {
       const newDay: Day = new Day(day.id,
         this.editForm.controls.dates.value,
         null, null

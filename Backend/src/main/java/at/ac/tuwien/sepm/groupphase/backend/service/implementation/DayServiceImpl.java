@@ -2,10 +2,12 @@ package at.ac.tuwien.sepm.groupphase.backend.service.implementation;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Day;
 import at.ac.tuwien.sepm.groupphase.backend.entity.DayFilter;
+import at.ac.tuwien.sepm.groupphase.backend.entity.ProjectTime;
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.DayRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.ProjectTimeRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.DayService;
 import at.ac.tuwien.sepm.groupphase.backend.validator.Implementation.Validator;
@@ -20,13 +22,15 @@ public class DayServiceImpl implements DayService {
 
     private final DayRepository dayRepository;
     private final UserRepository userRepository;
+    private final ProjectTimeRepository projectTimeRepository;
     private final Validator<Day> dayValidator;
     private final Validator<DayFilter> filterValidator;
 
 
-    public DayServiceImpl(DayRepository dayRepository, UserRepository userRepository, Validator<Day> dayValidator, Validator<DayFilter> dayFilterValidator) {
+    public DayServiceImpl(DayRepository dayRepository, UserRepository userRepository, ProjectTimeRepository projectTimeRepository, Validator<Day> dayValidator, Validator<DayFilter> dayFilterValidator) {
         this.dayRepository = dayRepository;
         this.userRepository = userRepository;
+        this.projectTimeRepository = projectTimeRepository;
         this.dayValidator = dayValidator;
         this.filterValidator = dayFilterValidator;
     }
@@ -46,12 +50,13 @@ public class DayServiceImpl implements DayService {
         if (day.getId() == null || day.getId() < 0){
             throw new ValidationException("Id can't be negativ.");
         }
-        Optional<User> userOptional = userRepository.findByUsername(username);
-        if(userOptional.isEmpty()){
-            throw new ValidationException("User can't be found");
+        Optional<Day> dayOptional = dayRepository.getDayByUsernameAndId(username, day.getId());
+        if(dayOptional.isEmpty()){
+            throw new ValidationException("Day can't be found");
         }
-        day.setUser(userOptional.get());
-        return dayRepository.save(day);
+        Day dayToSave = dayOptional.get();
+        dayToSave.setWork_date(day.getWork_date());
+        return dayRepository.save(dayToSave);
     }
 
     @Override
@@ -63,7 +68,7 @@ public class DayServiceImpl implements DayService {
         if(dayOptional.isEmpty()){
             throw new NotFoundException("Day couldn't be found.");
         }
-        dayRepository.deleteById(id);
+        dayRepository.delete(dayOptional.get());
     }
 
     @Override

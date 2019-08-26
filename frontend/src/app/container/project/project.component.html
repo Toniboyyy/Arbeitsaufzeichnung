@@ -31,16 +31,15 @@
       <td>{{projectTime.projectEntity.projectId}}</td>
       <td>{{projectTime.projectEntity.name}}</td>
       <td>{{projectTime.start}} - {{projectTime.finish}}</td>
-      <td>{{projectTime.working_hours}}</td>
+      <td>{{projectTime.working_hours}}h</td>
       <td>
-        <img src="assets/iconmonstr-pencil-8.svg" title="Bearbeiten">
         <img src="assets/iconmonstr-x-mark-1.svg" title="Löschen" (click)="deleteProjectTime(projectTime.id)"></td>
     </tr>
     <tr>
       <td></td>
       <td></td>
       <td></td>
-      <td>{{totalTime}}</td>
+      <td>{{totalTime}}h</td>
       <td></td>
     </tr>
   </table>
@@ -88,7 +87,7 @@
               </li>
               <li>Projekt: <a *ngIf="!selectedProjectSet()">{{selectedProject.name}}</a>
               </li>
-              <li>Zeit:
+              <li><button type="button" (click)="addProjectTime()" class="btn btn-secondary btn-sm mr-4" id="addProjectTime">Projektzeit hinzufügen</button>
               </li>
             </ul>
           </div>
@@ -123,7 +122,6 @@
                 </td>
               </tr>
             </table>
-            <div class="center"><button type="button" (click)="addProjectTime()" class="btn btn-success projecttime" >Projektzeit hinzufügen</button></div>
         </form>
       </div>
     </div>

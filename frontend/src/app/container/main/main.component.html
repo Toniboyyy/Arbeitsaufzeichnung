@@ -101,8 +101,8 @@
         <div class="modal-body" *ngIf="selectedDay !== undefined">
           <form class="form" [formGroup]="editForm" (ngSubmit)="submitDayToEdit(selectedDay)">
               <div class="form-group">
-                  <label for="inputDay">Tag</label>
-                  <input type="date" name="day" formControlName="dates" class="form-control" id="inputDay"
+                  <label for="inputDayEdit">Tag</label>
+                  <input type="date" name="day" formControlName="dates" class="form-control" id="inputDayEdit"
                          aria-describedby="titleHelp" value="{{selectedDay.dates}}">
               </div>
               <div *ngIf="submitted && editForm.controls.dates.errors" class="error">

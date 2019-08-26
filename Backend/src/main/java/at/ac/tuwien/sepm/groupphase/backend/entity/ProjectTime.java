@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.Objects;
 
 @Entity
 public class ProjectTime {
@@ -21,7 +22,7 @@ public class ProjectTime {
     @JoinColumn(nullable = false)
     private Project project;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(nullable = false)
     private Day day;
 
@@ -63,5 +64,28 @@ public class ProjectTime {
 
     public void setDay(Day day) {
         this.day = day;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProjectTime that = (ProjectTime) o;
+        return Objects.equals(id, that.id) &&
+            Objects.equals(start_time, that.start_time) &&
+            Objects.equals(finish_time, that.finish_time) &&
+            Objects.equals(project, that.project) &&
+            Objects.equals(day, that.day);
+    }
+
+    @Override
+    public String toString() {
+        return "ProjectTime{" +
+            "id=" + id +
+            ", start_time=" + start_time +
+            ", finish_time=" + finish_time +
+            ", project=" + project +
+            ", day=" + day +
+            '}';
     }
 }

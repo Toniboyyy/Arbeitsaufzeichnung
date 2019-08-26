@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -23,7 +24,6 @@ public class Day {
 
     @Column(nullable = false, name = "work_date")
     private LocalDate work_date;
-
 
     @OneToMany(mappedBy = "day", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProjectTime> project_times = new HashSet<>();
@@ -60,5 +60,26 @@ public class Day {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Day day = (Day) o;
+        return Objects.equals(id, day.id) &&
+            Objects.equals(user, day.user) &&
+            Objects.equals(work_date, day.work_date) &&
+            Objects.equals(project_times, day.project_times);
+    }
+
+    @Override
+    public String toString() {
+        return "Day{" +
+            "id=" + id +
+            ", user=" + user +
+            ", work_date=" + work_date +
+            ", project_times=" + project_times +
+            '}';
     }
 }
