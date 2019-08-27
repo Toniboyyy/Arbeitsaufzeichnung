@@ -22,15 +22,13 @@ public class DayServiceImpl implements DayService {
 
     private final DayRepository dayRepository;
     private final UserRepository userRepository;
-    private final ProjectTimeRepository projectTimeRepository;
     private final Validator<Day> dayValidator;
     private final Validator<DayFilter> filterValidator;
 
 
-    public DayServiceImpl(DayRepository dayRepository, UserRepository userRepository, ProjectTimeRepository projectTimeRepository, Validator<Day> dayValidator, Validator<DayFilter> dayFilterValidator) {
+    public DayServiceImpl(DayRepository dayRepository, UserRepository userRepository, Validator<Day> dayValidator, Validator<DayFilter> dayFilterValidator) {
         this.dayRepository = dayRepository;
         this.userRepository = userRepository;
-        this.projectTimeRepository = projectTimeRepository;
         this.dayValidator = dayValidator;
         this.filterValidator = dayFilterValidator;
     }
@@ -39,6 +37,9 @@ public class DayServiceImpl implements DayService {
     public Day add(Day day, String username) {
         dayValidator.validate(day);
         Optional<User> userOptional = userRepository.findByUsername(username);
+        if(userOptional.isEmpty()){
+            throw new NotFoundException("User adding the day can't be found");
+        }
         User user = userOptional.get();
         day.setUser(user);
         return dayRepository.save(day);

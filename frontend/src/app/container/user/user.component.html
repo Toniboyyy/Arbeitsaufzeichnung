@@ -1,11 +1,11 @@
 <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
-    <strong>Error! </strong> {{ errorMessage }}
+    <strong>Error! </strong> {{ errormessage }}
     <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
 
-  <div *ngIf="user !== undefined" class="alert alert-success alert-dismissible fade show" role="alert">
+<div *ngIf="user !== undefined" class="alert alert-success alert-dismissible fade show" role="alert">
     <h4 class="alert-heading">User sucessfully created!</h4>
     <strong> User {{ user.username }} was created! </strong>
     <button type="button" (click)="vanishUser()" class="close" data-dismiss="alert" aria-label="Close">
@@ -72,7 +72,7 @@
                 </div>
             </li>
             <li>
-                <button class="btn" (click)="addUser()">User hinzufügen</button>
+                <button class="btn" (click)="addUser()" id="addUser">User hinzufügen</button>
             </li>
         </ul>
     </form>

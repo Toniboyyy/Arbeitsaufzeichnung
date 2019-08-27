@@ -40,7 +40,7 @@
       <tr *ngFor="let day of days">
         <td>{{day.dates}}</td>
         <td>{{day.project_amount}}</td>
-        <td>{{day.project_hours| number: '.0-2'}}</td>
+        <td>{{day.project_hours| number: '.0-2'}}h</td>
         <td>
         <img src="assets/iconmonstr-pencil-8.svg" title="Bearbeiten" data-toggle="modal" data-target=".edit-day-modal" (click)="setSelected(day)">
         <img src="assets/iconmonstr-plus-5.svg" title="Projekt hinzufügen" [routerLink]="['/project', day.id]">
@@ -50,7 +50,7 @@
     <tr>
       <td></td>
       <td></td>
-      <td>{{this.totalTime | number: '.0-2'}}</td>
+      <td>{{this.totalTime | number: '.0-2'}}h</td>
       <td> </td>
     </tr>
   </table>

@@ -52,11 +52,6 @@ public class ProjectTimeEndpoint {
         }
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    @ApiOperation(value = "Change ProjectTime")
-    public ProjectTimeDTO change(@RequestBody ProjectTimeDTO projectTimeDTO, Principal principal){
-        return null;
-    }
 
     @RequestMapping(method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete ProjectTime")
