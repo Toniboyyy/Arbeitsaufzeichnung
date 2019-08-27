@@ -50,8 +50,9 @@ export class CreateProjectComponent implements OnInit {
   }
 
   private clearForm() {
-    this.projectForm.reset();
     this.submitted = false;
+    this.projectForm.reset();
+    
   }
 
       /**

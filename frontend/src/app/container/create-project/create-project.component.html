@@ -16,7 +16,7 @@
       <div class="outerbox">
         <h1 style="text-align: center;">Projekt hinzufügen</h1>
         <div class="middleForm">
-        <form class="form" [formGroup]="projectForm" (ngSubmit)="addProject()" style="text-align: center;">
+        <form class="form" [formGroup]="projectForm" style="text-align: center;">
             <ul style="list-style-type:none">
                 <li>
                     <div class="input-group">
@@ -34,7 +34,7 @@
                         <div class="input-right"><input type="number" min="1" name="projectnumber" formControlName="projectnumber" class="form" id="inputFilterProjectNumber" placeholder="Projektnummer"></div>
                     </div>
                     <div *ngIf="submitted && projectForm.controls.projectnumber.errors" class="error">
-                            <small class="form-text text-warning">Eine Projectnummer wird benötig!
+                            <small class="form-text text-warning">Eine Projektnummer wird benötig!
                             </small>
                     </div>
                 </li>
@@ -49,7 +49,7 @@
                     </div>
                 </li>
                 <li>
-                    <button class="btn" (click)="addProject()">Projekt hinzufügen</button>
+                    <button class="btn" (click)="addProject()" id="addProject">Projekt hinzufügen</button>
                 </li>
             </ul>
         </form>
