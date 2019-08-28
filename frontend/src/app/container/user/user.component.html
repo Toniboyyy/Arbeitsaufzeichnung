@@ -1,5 +1,5 @@
 <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
-    <strong>Error! </strong> {{ errormessage }}
+    <strong>Error! </strong> {{ errorMessage }}
     <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -21,55 +21,55 @@
                 <div class="input-group">
                         <div class="input-left"><label for="inputFilterVorname">Vorname: </label></div>
                     <div class="input-right"><input type="string" name="firstname" formControlName="firstname" class="form" id="inputFilterVorname" placeholder="Vorname"></div>
+                </div>
                     <div *ngIf="submitted && userForm.controls.firstname.errors" class="error">
                             <small class="form-text text-warning">Ein Vorname wird benötigt!
                             </small>
                     </div>
-                </div>
             </li>
             <li>
                 <div class="input-group">
                     <div class="input-left"><label for="inputFilterNachname">Nachname: </label></div>
                     <div class="input-right"><input type="string" name="lastname" formControlName="lastname" class="form" id="inputFilterNachname" placeholder="Nachname"></div>
-                    <div *ngIf="submitted && userForm.controls.lastname.errors" class="error">
-                            <small class="form-text text-warning">Ein Nachname wird benötigt!
-                            </small>
-                    </div>
                 </div>
+                <div *ngIf="submitted && userForm.controls.lastname.errors" class="error">
+                    <small class="form-text text-warning">Ein Nachname wird benötigt!
+                    </small>
+            </div>
             </li>
             <li>
                 <div class="input-group">
                     <div class="input-left"><label for="inputFilterUsername">Username: </label></div>
                     <div class="input-right"><input type="string" name="username" formControlName="username" class="form" id="inputFilterUsername" placeholder="Username"></div>
-                    <div *ngIf="submitted && userForm.controls.username.errors" class="error">
-                            <small class="form-text text-warning">Ein Username wird benötigt!
-                            </small>
-                    </div>
                 </div>
+                <div *ngIf="submitted && userForm.controls.username.errors" class="error">
+                    <small class="form-text text-warning">Ein Username wird benötigt!
+                    </small>
+            </div>
             </li>
             <li>
                 <div class="input-group">
                     <div class="input-left"><label for="inputFilterPassword">Passwort: </label></div>
                     <div class="input-right"><input type="password" name="password" formControlName="password" class="form" id="inputFilterPassword" placeholder="Passwort"></div>
-                    <div *ngIf="submitted && userForm.controls.password.errors" class="error">
-                            <small class="form-text text-warning">Ein Passwort wird benötigt!
-                            </small>
-                    </div>
-                    <div *ngIf="!passwordEqual() && submitted" class="error">
-                            <small class="form-text text-warning">Die Passwörter müssen miteinander übereinstimmen!
-                                </small>
-                    </div>
                 </div>
+                <div *ngIf="submitted && userForm.controls.password.errors" class="error">
+                    <small class="form-text text-warning">Ein Passwort mit mindestens 8 Zeichen wird benötigt!
+                    </small>
+            </div>
+            <div *ngIf="!passwordEqual() && submitted" class="error">
+                    <small class="form-text text-warning">Die Passwörter müssen miteinander übereinstimmen!
+                        </small>
+            </div>
             </li>
             <li>
                 <div class="input-group">
                     <div class="input-left"><label for="inputFilterRePassword">Passwort: </label></div>
                     <div class="input-right"><input type="password" name="second_pw" formControlName="second_pw" class="form" id="inputFilterRePassword" placeholder="Passwort"></div>
-                    <div *ngIf="submitted && userForm.controls.second_pw.errors" class="error">
-                            <small class="form-text text-warning">Bestätigen sie das Passwort!
-                            </small>
-                    </div>
                 </div>
+                <div *ngIf="submitted && userForm.controls.second_pw.errors" class="error">
+                    <small class="form-text text-warning">Bestätigen sie das Passwort!
+                    </small>
+            </div>
             </li>
             <li>
                 <button class="btn" (click)="addUser()" id="addUser">User hinzufügen</button>

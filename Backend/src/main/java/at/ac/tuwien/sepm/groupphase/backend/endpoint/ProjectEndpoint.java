@@ -45,7 +45,7 @@ public class ProjectEndpoint {
         try {
             return projectMapper.ProjectListToProjectDtoSet(projectService.getByFilter(projectNr));
         } catch (ValidationException e){
-          throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+          throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (Exception e){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -59,7 +59,7 @@ public class ProjectEndpoint {
         try {
             return projectMapper.ProjectToProjectDto(projectService.create(projectMapper.ProjectDtoToProject(projectDTO)));
         }catch (ValidationException e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -38,7 +38,7 @@ public class DayEndpoint {
         try {
             return dayMapper.DayListToDayDtoSet(dayService.getByMonthAndYear(dayMapper.DayFilterDtoToDayFilter(dayFilterDTO), principal.getName()));
         }catch (ValidationException e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }catch (NotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }catch (Exception e){
@@ -52,7 +52,7 @@ public class DayEndpoint {
         try{
             return dayMapper.DayToDayDto(dayService.add(dayMapper.DayDtoToDay(dayDTO), principal.getName()));
         }catch (ValidationException e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -64,7 +64,7 @@ public class DayEndpoint {
         try {
             return dayMapper.DayToDayDto(dayService.change(dayMapper.DayDtoToDay(dayDTO), principal.getName()));
         }catch (ValidationException e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }catch (NotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }catch (Exception e){
@@ -78,7 +78,7 @@ public class DayEndpoint {
         try {
             dayService.delete(id, principal.getName());
         } catch (ValidationException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (NotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } catch (Exception e){
@@ -92,7 +92,7 @@ public class DayEndpoint {
         try {
             return dayMapper.DayToDayDto(dayService.getById(dayId, principal.getName()));
         } catch (ValidationException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }

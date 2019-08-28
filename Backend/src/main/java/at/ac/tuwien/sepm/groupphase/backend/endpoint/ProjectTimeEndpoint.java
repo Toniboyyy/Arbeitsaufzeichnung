@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.projectTime.ProjectTime
 import at.ac.tuwien.sepm.groupphase.backend.entity.ProjectTime;
 import at.ac.tuwien.sepm.groupphase.backend.entity.mapper.projectTime.ProjectTimeMapper;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
+import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import at.ac.tuwien.sepm.groupphase.backend.service.ProjectTimeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,6 +34,8 @@ public class ProjectTimeEndpoint {
     public Set<ProjectTimeDTO> getProjectTimeByDayId(@RequestParam Long dayId, Principal principal){
         try {
             return projectTimeMapper.TimeListToTimeDto(projectTimeService.getByDayId(dayId, principal.getName()));
+        }catch (ValidationException e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }catch (NotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }catch (Exception e){
@@ -45,6 +48,8 @@ public class ProjectTimeEndpoint {
     public ProjectTimeDTO add(@RequestBody ProjectTimeDTO projectTimeDTO, Principal principal){
         try{
             return projectTimeMapper.TimeToTimeDto(projectTimeService.add(projectTimeMapper.TimeDtoToTime(projectTimeDTO), principal.getName()));
+        }catch (ValidationException e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }catch (NotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }catch (Exception e){
@@ -58,6 +63,8 @@ public class ProjectTimeEndpoint {
     public void delete(@RequestParam Long id, Principal principal) {
         try {
             projectTimeService.delete(id, principal.getName());
+        }catch (ValidationException e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } catch (Exception e) {

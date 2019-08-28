@@ -37,7 +37,7 @@ public class UserEndpoint {
         try {
             return userMapper.UserToUserWithoutPwDTO(userService.create(userMapper.UserDTOToUser(userDTO)));
         }catch (ValidationException e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -49,7 +49,7 @@ public class UserEndpoint {
         try {
             return userMapper.UserToUserWithoutPwDTO(userService.findUserByName(principal.getName()));
         }catch (ValidationException e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }catch (NotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }catch (Exception e){

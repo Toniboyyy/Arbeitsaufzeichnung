@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.configuration;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Enum.AuthorityType;
 import at.ac.tuwien.sepm.groupphase.backend.entity.User;
+import at.ac.tuwien.sepm.groupphase.backend.repository.ProjectTimeRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import org.apache.juli.logging.Log;
 import org.slf4j.Logger;
